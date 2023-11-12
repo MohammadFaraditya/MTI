@@ -19,32 +19,42 @@ use App\Http\Controllers\AdminController;
 
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+
 Route::post('/login', [LoginController::class, 'login']);
 
 Route::get('/', function () {
     return redirect('/login');
 });
 
-Route::get('/admin', [AdminController::class, 'index'])->middleware('auth');
 
-$adminRoutes = [
-    'jadwal-perjalanan',
-    'data-perjalanan',
-    'laporan-operasional',
-    'data-tugas',
-    'bus',
-    'sopir',
-    'kernet',
-    'agen',
-    'gaji',
-    'komisi-agen',
-];
+Route::middleware(['auth', 'web'])->group(function () {
 
-Route::prefix('/admin')->group(function () use ($adminRoutes) {
-    foreach ($adminRoutes as $route) {
-        Route::get('/' . $route, [AdminController::class, $route])->middleware('auth');
-    }
+    $adminRoutes = [
+        'jadwal-perjalanan',
+        'data-perjalanan',
+        'laporan-operasional',
+        'data-tugas',
+        'bus',
+        'sopir',
+        'kernet',
+        'agen',
+        'gaji',
+        'komisi-agen',
+    ];
+
+    Route::get('/admin', [AdminController::class, 'index']);
+
+    Route::prefix('/admin')->group(function () use ($adminRoutes) {
+        foreach ($adminRoutes as $route) {
+            Route::get('/' . $route, [AdminController::class, $route]);
+        }
+    });
 });
+
+
+
+
+
 
 
 Route::get('/agen', [\App\Http\Controllers\AgenController::class, 'index']);

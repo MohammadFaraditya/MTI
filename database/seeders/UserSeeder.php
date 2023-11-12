@@ -19,11 +19,27 @@ class UserSeeder extends Seeder
         $hashedPassword = Hash::make('admin123');
 
 $data = [
-    'ID_Akun' => 'A001',
-    'Role' => 'Admin',
-    'Username' => 'admin',
-    'Password' => $hashedPassword,
+    [
+    'ID_Akun' => 'AG01',
+    'Role' => 'agen',
+    'Username' => 'agen',
+    'Password' => Hash::make('agen'),
     'Status' => 'Aktif',
+    ],
+    [
+    'ID_Akun' => 'SPR01',
+    'Role' => 'sopir',
+    'Username' => 'sopir',
+    'Password' => Hash::make('sopir'),
+    'Status' => 'Aktif',
+    ],
+    [
+    'ID_Akun' => 'KRT01',
+    'Role' => 'kernet',
+    'Username' => 'kernet',
+    'Password' => Hash::make('kernet'),
+    'Status' => 'Aktif',
+    ]
 ];
 DB::table('users')->insert($data);
 
