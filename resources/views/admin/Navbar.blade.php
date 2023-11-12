@@ -15,8 +15,8 @@ navbar-main navbar-scroll="true">
     </div>
     <div class="hidden ease-in-out relative z-10" id="adminDropdown">
       <div class=" bg-slate-200 flex flex-col rounded-xl absolute right-1 top-12 w-40 p-5 gap-3">
-        <button><a href="#">Ubah Password</a></button>
-        <button><a href="#">Logout</a></button>
+        <button><a href="/ubah-password">Ubah Password</a></button>
+        <button><a href="/logout" id="logoutButton">Huha</a></button>
       </div>
     </div>
   </div>

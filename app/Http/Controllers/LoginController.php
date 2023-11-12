@@ -48,4 +48,10 @@ class LoginController extends Controller
         }
 
     }
+    public function logout()
+    {
+        Auth::logout(); // This will log out the user
+        return redirect('/login'); // Redirect to the login page after logout
+    }
+    
 }
