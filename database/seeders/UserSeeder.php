@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $hashedPassword = Hash::make('admin123');
+        // $hashedPassword = Hash::make('admin123');
 
 $data = [
     [
@@ -38,6 +38,13 @@ $data = [
     'Role' => 'kernet',
     'Username' => 'kernet',
     'Password' => Hash::make('kernet'),
+    'Status' => 'Aktif',
+    ],
+    [
+    'ID_Akun' => 'AD01',
+    'Role' => 'admin',
+    'Username' => 'admin',
+    'Password' => Hash::make('admin123'),
     'Status' => 'Aktif',
     ]
 ];

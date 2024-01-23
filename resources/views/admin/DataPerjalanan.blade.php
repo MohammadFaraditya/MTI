@@ -1,7 +1,7 @@
 @extends('admin.MainAdmin')
 
 @include('admin.sidebar')
-@include('admin.Navbar')
+@include('admin.NavbarAdmin')
 
 
 @section('card')

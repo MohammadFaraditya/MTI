@@ -28,7 +28,6 @@ class LoginController extends Controller
             Auth::login($user);
             // dd(Hash::check($request->password, $user->Password), Auth::login($user), Auth::check());
             if(Auth::check()) {
-            
                 if($user->Role == 'admin'){
                     return redirect('/admin');
                 }else if($user->Role == 'agen'){
@@ -41,11 +40,12 @@ class LoginController extends Controller
             }
             
         }else {
-            Session::flash('status', 'error');
-            Session::flash('message', 'Username atau Password salah.');
-            return redirect('/login');
+            // Session::flash('error', 'Login gagal. Username atau Password salah.');
+            // return redirect('/login');
+            return view('login')->with('error', 'Login gagal. Username atau Password salah.');
             // return "Fail";
         }
+
 
     }
     public function logout()
@@ -53,5 +53,7 @@ class LoginController extends Controller
         Auth::logout(); // This will log out the user
         return redirect('/login'); // Redirect to the login page after logout
     }
+
+    
     
 }

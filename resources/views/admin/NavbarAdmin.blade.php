@@ -1,6 +1,6 @@
-{{-- @extends('admin.sidebar') --}}
+@extends('admin.sidebar')
 
-@section('navbar')
+@section('navbarAdmin')
 <nav
 class="relative flex flex-wrap items-center justify-between px-0 py-2 mx-6 transition-all shadow-none duration-250 ease-soft-in rounded-2xl mt-4 lg:flex-nowrap lg:justify-start"
 navbar-main navbar-scroll="true">
@@ -15,8 +15,8 @@ navbar-main navbar-scroll="true">
     </div>
     <div class="hidden ease-in-out relative z-10" id="adminDropdown">
       <div class=" bg-slate-200 flex flex-col rounded-xl absolute right-1 top-12 w-40 p-5 gap-3">
-        <button><a href="/ubah-password">Ubah Password</a></button>
-        <button><a href="/logout" id="logoutButton">Huha</a></button>
+        <button><a href="/ubah-password" id="changePasswordForm">Ubah Password</a></button>
+        <button><a href="/logout" id="logoutButton">Logout</a></button>
       </div>
     </div>
   </div>

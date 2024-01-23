@@ -1,7 +1,7 @@
 // Ambil elemen tombol admin dan dropdown admin
 let adminButton = document.getElementById("adminButton");
 let adminDropdown = document.getElementById("adminDropdown");
-let logoutButton = document.getElementById("logoutButton");
+
 
 // Inisialisasi status tersembunyi
 let isHidden = true;
@@ -35,5 +35,7 @@ adminButton.addEventListener("click", function () {
 
     // Ubah status tersembunyi
     isHidden = !isHidden;
+
+
 });
 

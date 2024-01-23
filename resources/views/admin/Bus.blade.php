@@ -1,7 +1,7 @@
 @extends('admin.MainAdmin')
 
 @include('admin.sidebar')
-@include('admin.Navbar')
+@include('admin.NavbarAdmin')
 
 @section('card')
 <div class="w-full px-6 py-6 mx-auto">
@@ -120,5 +120,6 @@
             </div>
         </div>
     </div>
+    
 </div>
 @endsection

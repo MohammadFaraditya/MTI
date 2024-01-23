@@ -25,11 +25,11 @@
             <main class="flex flex-col-reverse mx-auto w-full h-3/4 gap-4 md:flex-row md:justify-center md:items-center">
                 <section class="h-1/2 md:w-1/2 md:h-3/4 md:flex md:flex-col md:justify-center">
                     <div class="flex flex-col px-10 gap-2 ">
-                        @if(Session::has('status'))
-                        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                            {{ Session::get('message') }}
-                        </div>
-                        @endif
+                        @if(isset($error))
+                            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 font-body" role="alert">
+                                {{ $error }}
+                            </div>
+                        @endif 
                         <h3 class="text-2xl font-semibold mt-5 lg:text-3xl text-black font-body">Login</h3>
                         <form class="flex flex-col text-base lg:text-lg" method="POST" action="{{URL('login')}}">
                             @csrf
