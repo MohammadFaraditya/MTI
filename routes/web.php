@@ -45,6 +45,7 @@ Route::middleware(['auth', 'web'])->group(function () {
     Route::post('/admin', [AdminController::class, 'StoreRute']);
     Route::get('/admin-editrute/{ID_Rute}', [AdminController::class, 'EditRute']);
     Route::put('/admin/{ID_Rute}', [AdminController::class, 'update']);
+    Route::delete("/admin/delete/{ID_Rute}", [AdminController::class, 'destroy']);
 
 
 

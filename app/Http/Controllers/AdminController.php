@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Post;
 use App\Models\Rute;
 use RealRashid\SweetAlert\Facades\Alert;
-
+use Reflector;
 
 class AdminController extends Controller
 {
@@ -52,6 +52,14 @@ class AdminController extends Controller
         $Rute->save();
 
         Alert::success("Berhasil Menambahkan Rute");
+
+        return redirect('/admin');
+    }
+
+    public function destroy($ID_Rute)
+    {
+        $destroy = Rute::findOrFail($ID_Rute);
+        $destroy->delete();
 
         return redirect('/admin');
     }
