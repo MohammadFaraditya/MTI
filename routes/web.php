@@ -47,10 +47,20 @@ Route::middleware(['auth', 'web'])->group(function () {
     Route::put('/admin/{ID_Rute}', [AdminController::class, 'update']);
     Route::delete("/admin/delete/{ID_Rute}", [AdminController::class, 'destroy']);
 
-
-
     Route::prefix('/admin')->group(function () {
+
+        // Admin Jadwal Perjalanan
         Route::get('/jadwal-perjalanan', [AdminController::class, 'JadwalPerjalanan']);
+        Route::prefix('/jadwal-perjalanan')->group(function () {
+            Route::get('/addjadwal', [AdminController::class, 'addJadwalPerjalanan']);
+            Route::post('/storejadwal', [AdminController::class, 'storeJadwal']);
+            Route::get('/editjadwal/{ID_Jadwal}', [AdminController::class, 'EditJadwal']);
+            Route::put('/update/{ID_Jadwal}', [AdminController::class, 'updateJadwal']);
+            Route::delete('/delete/{ID_Jadwal}', [AdminController::class, 'deleteJadwal']);
+        });
+
+
+
         Route::get('/data-perjalanan', [AdminController::class, 'DataPerjalanan']);
         Route::get('/laporan-operasional', [AdminController::class, 'LaporanOperasional']);
         Route::get('/data-tugas', [AdminController::class, 'DataTugas']);
