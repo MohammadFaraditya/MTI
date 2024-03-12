@@ -4,6 +4,9 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DebugController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\JadwalController;
+use App\Http\Controllers\RuteController;
+use App\Http\Controllers\DataPerjalananController;
 use App\Http\Controllers\ChangePasswordController;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -40,32 +43,48 @@ Route::get('/alert', function () {
 Route::middleware(['auth', 'web'])->group(function () {
 
     // Admin Rute
-    Route::get('/admin', [AdminController::class, 'index'])->name("admin");
-    Route::get('/admin-addrute', [AdminController::class, 'addRute']);
-    Route::post('/admin', [AdminController::class, 'StoreRute']);
-    Route::get('/admin-editrute/{ID_Rute}', [AdminController::class, 'EditRute']);
-    Route::put('/admin/{ID_Rute}', [AdminController::class, 'update']);
-    Route::delete("/admin/delete/{ID_Rute}", [AdminController::class, 'destroy']);
+    Route::get('/admin', [RuteController::class, 'index'])->name("admin");
+    Route::get('/admin-addrute', [RuteController::class, 'addRute']);
+    Route::post('/admin', [RuteController::class, 'StoreRute']);
+    Route::get('/admin-editrute/{ID_Rute}', [RuteController::class, 'EditRute']);
+    Route::put('/admin/{ID_Rute}', [RuteController::class, 'update']);
+    Route::delete("/admin/delete/{ID_Rute}", [RuteController::class, 'destroy']);
 
     Route::prefix('/admin')->group(function () {
 
         // Admin Jadwal Perjalanan
-        Route::get('/jadwal-perjalanan', [AdminController::class, 'JadwalPerjalanan']);
+        Route::get('/jadwal-perjalanan', [JadwalController::class, 'JadwalPerjalanan']);
         Route::prefix('/jadwal-perjalanan')->group(function () {
-            Route::get('/addjadwal', [AdminController::class, 'addJadwalPerjalanan']);
-            Route::post('/storejadwal', [AdminController::class, 'storeJadwal']);
-            Route::get('/editjadwal/{ID_Jadwal}', [AdminController::class, 'EditJadwal']);
-            Route::put('/update/{ID_Jadwal}', [AdminController::class, 'updateJadwal']);
-            Route::delete('/delete/{ID_Jadwal}', [AdminController::class, 'deleteJadwal']);
+            Route::get('/addjadwal', [JadwalController::class, 'addJadwalPerjalanan']);
+            Route::post('/storejadwal', [JadwalController::class, 'storeJadwal']);
+            Route::get('/editjadwal/{ID_Jadwal}', [JadwalController::class, 'EditJadwal']);
+            Route::put('/update/{ID_Jadwal}', [JadwalController::class, 'updateJadwal']);
+            Route::delete('/delete/{ID_Jadwal}', [JadwalController::class, 'deleteJadwal']);
         });
 
+        // Admin Data Perjalanan
+        Route::get('/data-perjalanan', [DataPerjalananController::class, 'DataPerjalanan']);
+        Route::prefix('/data-perjalanan')->group(function () {
+            Route::get('/cek-hari', [DataPerjalananController::class, 'CekHari']);
+            Route::get('/edit-data-perjalanan/{ID_DataPerjalanan}', [DataPerjalananController::class, 'EditDataPerjalanan']);
+            Route::put('/update-data-perjalanan/{ID_DataPerjalanan}', [DataPerjalananController::class, 'UpdateDataPerjalanan']);
+            Route::delete('/delete-data-perjalanan/{ID_DataPerjalanan}', [DataPerjalananController::class, 'DeleteDataPerjalanan']);
+        });
 
-
-        Route::get('/data-perjalanan', [AdminController::class, 'DataPerjalanan']);
+        // Admin Laporan
         Route::get('/laporan-operasional', [AdminController::class, 'LaporanOperasional']);
+
+        // Admin Tugas
         Route::get('/data-tugas', [AdminController::class, 'DataTugas']);
+
+        // Admin Bus
         Route::get('/bus', [AdminController::class, 'Bus']);
+
+        // Admin Sopir
         Route::get('/sopir', [AdminController::class, 'Sopir']);
+        Route::prefix('/sopir')->group(function () {
+        });
+
         Route::get('/kernet', [AdminController::class, 'Kernet']);
         Route::get('/agen', [AdminController::class, 'Agen']);
         Route::get('/gaji', [AdminController::class, 'Gaji']);

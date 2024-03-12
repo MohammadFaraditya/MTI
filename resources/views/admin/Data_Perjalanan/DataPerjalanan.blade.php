@@ -3,22 +3,17 @@
 @include('admin.sidebar')
 @include('admin.NavbarAdmin')
 
-@include('sweetalert::alert')
+
 @section('card')
     <div class="w-full px-6 py-6 mx-auto">
         <!-- table Data Perjalanan -->
-
         <div class="flex flex-wrap -mx-3">
             <div class="flex-none w-full max-w-full px-3">
                 <div
                     class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-soft-xl rounded-2xl bg-clip-border overflow-x-auto">
                     <div
                         class="p-6 pb-0 mb-0 bg-white border-b-0 border-b-solid rounded-t-2xl border-b-transparent flex place-content-between">
-                        <h6>Tabel Jadwal Perjalanan</h6>
-
-                        <a href="/admin/jadwal-perjalanan/addjadwal" class="bg-slate-500 text-white p-3 rounded-lg text-xs">+
-                            Tambah
-                            Jadwal</a>
+                        <h6>Tabel Data Perjalanan</h6>
                     </div>
                     <div class="flex-auto px-0 pt-0 pb-2">
                         <div class="flex p-0">
@@ -26,79 +21,65 @@
                                 <thead class="align-bottom">
                                     <th
                                         class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                        ID Jadwal</th>
+                                        ID Perjalanan</th>
                                     <th
                                         class="px-2 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
                                         Tanggal</th>
                                     <th
                                         class="px-2 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                        ID Rute</th>
+                                        ID Jadwal</th>
                                     <th
                                         class="px-6 py-3  font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                        Jumlah Tiket yang terjual</th>
+                                    <th
+                                        class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                        Jumlah Sisa Tiket</th>
+                                    <th
+                                        class="px-2 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
                                         ID Bus</th>
                                     <th
                                         class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                        Kelas Bus</th>
-                                    <th
-                                        class="px-2 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                        Jumlah Seat</th>
-                                    <th
-                                        class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                        Jam Keberangkatan</th>
-                                    <th
-                                        class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                        Harga</th>
+                                        ID Rute</th>
+
                                 </thead>
                                 <tbody>
-                                    @foreach ($DataJadwal as $jadwal)
+                                    @foreach ($DataPerjalanan as $data)
                                         <tr>
                                             <td
                                                 class="p-2 pl-6 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
                                                 <p class="mb-0 text-xs font-semibold leading-tight ">
-                                                    {{ $jadwal->ID_Jadwal }}
-                                                </p>
+                                                    {{ $data->ID_Perjalanan }}</p>
                                             </td>
                                             <td
                                                 class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                                <p class="mb-0 text-xs font-semibold leading-tight">{{ $jadwal->Tanggal }}
+                                                <p class="mb-0 text-xs font-semibold leading-tight">{{ $data->Tanggal }}
                                                 </p>
                                             </td>
                                             <td
                                                 class="p-2 pl-1 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                                <p class="mb-0 text-xs font-semibold leading-tight">{{ $jadwal->ID_Rute }}
+                                                <p class="mb-0 text-xs font-semibold leading-tight">{{ $data->ID_Jadwal }}
                                                 </p>
                                             </td>
                                             <td class="p-2 pl-6  align-middle bg-transparent border-b shadow-transparent ">
-                                                <p class="mb-0 text-xs font-semibold leading-tight ">{{ $jadwal->ID_Bus }}
-                                                </p>
+                                                <p class="mb-0 text-xs font-semibold leading-tight ">
+                                                    {{ $data->Jumlah_Tiket_Yang_Terjual }}</p>
                                             </td>
                                             <td class="p-2 pl-6 align-middle bg-transparent border-b shadow-transparent">
                                                 <p class="mb-0 text-xs font-semibold leading-tight ">
-                                                    {{ $jadwal->Kelas_Bus }}
-                                                </p>
+                                                    {{ $data->Jumlah_Sisa_Tiket }}</p>
                                             </td>
                                             <td
                                                 class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                                <p class="mb-0 text-xs font-semibold leading-tight ">
-                                                    {{ $jadwal->Seat_Terisi }}
-                                                    / {{ $jadwal->Jumlah_Seat }}
-                                                </p>
+                                                <p class="mb-0 text-xs font-semibold leading-tight ">{{ $data->ID_Bus }}</p>
                                             </td>
                                             <td
                                                 class="p-2 pl-6  align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                                <p class="mb-0 text-xs font-semibold leading-tight">
-                                                    {{ Carbon\Carbon::parse($jadwal->Jam_Keberangkatan)->format('H:i') }}
-                                                </p>
-                                            </td>
-                                            <td
-                                                class="p-2 pl-6  align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                                <p class="mb-0 text-xs font-semibold leading-tight">Rp. {{ $jadwal->Harga }}
-                                                </p>
+                                                <p class="mb-0 text-xs font-semibold leading-tight">{{ $data->ID_Rute }}</p>
                                             </td>
                                             <td
                                                 class="p-2 pl-6 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                                <a href="jadwal-perjalanan/editjadwal/{{ $jadwal->ID_Jadwal }}">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                <a href="data-perjalanan/edit-data-perjalanan/{{ $data->ID_Perjalanan }}"><svg
+                                                        xmlns="http://www.w3.org/2000/svg" fill="none"
                                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                                         class="w-6 h-6">
                                                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -108,7 +89,8 @@
                                             </td>
                                             <td
                                                 class="p-2 pl-6 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                                <form action="jadwal-perjalanan/delete/{{ $jadwal->ID_Jadwal }}"
+                                                <form
+                                                    action="data-perjalanan/delete-data-perjalanan/{{ $data->ID_Perjalanan }}"
                                                     method="POST">
                                                     @csrf
                                                     @method('delete')
