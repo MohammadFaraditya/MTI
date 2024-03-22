@@ -1,0 +1,193 @@
+@extends('admin.MainAdmin')
+
+@include('admin.sidebar')
+@include('admin.NavbarAdmin')
+
+@section('card')
+    <div class="w-full px-6 py-6 mx-auto">
+        <!-- table Gaji -->
+
+        <div class="flex flex-wrap -mx-3">
+            <div class="flex-none w-full max-w-full px-3">
+                {{-- Form Gaji Sopir --}}
+                <div class=" absolute hidden " id="FormGajiSopir">
+                    <div
+                        class="absolute p-10 z-100 flex flex-col min-w-0 break-words bg-blue-400 border-0 shadow-soft-xl rounded-2xl bg-clip-border ml-96">
+
+                        <div class="p-2 mb-0 text-center">
+                            <h5 class="mt-6 text-white">Ubah Gaji Sopir</h5>
+                        </div>
+                        @foreach ($komisiGaji as $komisi)
+                            <div class="flex-auto p-6">
+                                <form role="form text-left" action="/admin/gaji/ubah-gaji-sopir/{{ $komisi->ID_GajiKomisi }}"
+                                    method="POST">
+                                    @method('put')
+                                    @csrf
+                                    <div class="mb-4">
+                                        <input type="text"
+                                            class="text-sm focus:shadow-soft-primary-outline leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-black bg-white bg-clip-padding py-2 px-3 font-normal text-black transition-all focus:border-green-500 focus:bg-white focus:text-black  focus:outline-none focus:transition-shadow"
+                                            name="Gaji_Sopir" />
+                                    </div>
+
+                                    <div class="flex justify-around gap-4">
+                                        <div class="text-center">
+                                            <button type="submit"
+                                                class="inline-block w-full px-6 py-3 mt-6 mb-2 font-bold text-center text-white uppercase align-middle transition-all bg-transparent border-0 rounded-lg cursor-pointer active:opacity-85 hover:scale-102 hover:shadow-soft-xs leading-pro text-xs ease-soft-in tracking-tight-soft shadow-soft-md bg-150 bg-x-25 bg-gradient-to-tl from-gray-900 to-slate-800 hover:border-slate-700 hover:bg-slate-700 hover:text-white">Submit</button>
+                                        </div>
+                                        <div class="text-center" id="cancelFormSopir">
+                                            <button
+                                                class="inline-block w-full px-6 py-3 mt-6 mb-2 font-bold text-center text-white uppercase align-middle transition-all bg-transparent border-0 rounded-lg cursor-pointer active:opacity-85 hover:scale-102 hover:shadow-soft-xs leading-pro text-xs ease-soft-in tracking-tight-soft shadow-soft-md bg-150 bg-x-25 bg-gradient-to-tl from-gray-900 to-slate-800 hover:border-slate-700 hover:bg-slate-700 hover:text-white">Cancel</button>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                {{-- Form Gaji Kernet --}}
+                <div class="hidden absolute" id="FormGajiKernet">
+                    <div
+                        class="absolute p-10 z-100 flex flex-col min-w-0 break-words bg-blue-400 border-0 shadow-soft-xl rounded-2xl bg-clip-border ml-96">
+
+                        <div class="p-2 mb-0 text-center">
+                            <h5 class="mt-6 text-white">Ubah Gaji Kernet</h5>
+                        </div>
+                        @foreach ($komisiGaji as $komisi)
+                            <div class="flex-auto p-6">
+                                <form role="form text-left"
+                                    action="/admin/gaji/ubah-gaji-kernet/{{ $komisi->ID_GajiKomisi }}" method="POST">
+                                    @method('put')
+                                    @csrf
+                                    <div class="mb-4">
+                                        <input type="text"
+                                            class="text-sm focus:shadow-soft-primary-outline leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-black bg-white bg-clip-padding py-2 px-3 font-normal text-black transition-all focus:border-green-500 focus:bg-white focus:text-black  focus:outline-none focus:transition-shadow"
+                                            name="Gaji_Kernet" />
+                                    </div>
+
+                                    <div class="flex justify-around gap-4">
+                                        <div class="text-center">
+                                            <button type="submit"
+                                                class="inline-block w-full px-6 py-3 mt-6 mb-2 font-bold text-center text-white uppercase align-middle transition-all bg-transparent border-0 rounded-lg cursor-pointer active:opacity-85 hover:scale-102 hover:shadow-soft-xs leading-pro text-xs ease-soft-in tracking-tight-soft shadow-soft-md bg-150 bg-x-25 bg-gradient-to-tl from-gray-900 to-slate-800 hover:border-slate-700 hover:bg-slate-700 hover:text-white">Submit</button>
+                                        </div>
+                                        <div class="text-center" id="cancelFormKernet">
+                                            <button
+                                                class="inline-block w-full px-6 py-3 mt-6 mb-2 font-bold text-center text-white uppercase align-middle transition-all bg-transparent border-0 rounded-lg cursor-pointer active:opacity-85 hover:scale-102 hover:shadow-soft-xs leading-pro text-xs ease-soft-in tracking-tight-soft shadow-soft-md bg-150 bg-x-25 bg-gradient-to-tl from-gray-900 to-slate-800 hover:border-slate-700 hover:bg-slate-700 hover:text-white">Cancel</button>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+                <div
+                    class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-soft-xl rounded-2xl bg-clip-border overflow-x-auto">
+                    <div class="flex justify-between">
+                        <div class="p-6 pb-0 mb-0 bg-white border-b-0 border-b-solid rounded-t-2xl border-b-transparent ">
+                            <h5>Tabel Data Gaji</h5>
+                            @foreach ($komisiGaji as $komisiGaji)
+                                <div class="flex">
+                                    <h6>Gaji Sopir = Rp. {{ number_format($komisiGaji->Gaji_Sopir, 0, ',', '.') }}/tugas
+                                    </h6>
+                                    <button class="ml-4 mt-[-10px]"><svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"
+                                            id="ButtonSopir">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                                        </svg></button>
+                                </div>
+                                <div class="flex">
+                                    <h6>Gaji Kernet = Rp. {{ number_format($komisiGaji->Gaji_Kernet, 0, ',', '.') }}/tugas
+                                    </h6>
+                                    <button class="ml-4 mt-[-10px]"><svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"
+                                            id="ButtonKernet">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                                        </svg></button>
+                                </div>
+                            @endforeach
+                        </div>
+
+                    </div>
+
+                    <div class="flex-auto px-0 pt-0 pb-2">
+                        <div class="flex p-0">
+
+                            <table class="items-center w-full mb-0 align-top border-gray-200 text-slate-500">
+                                <thead class="align-bottom">
+                                    <th
+                                        class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                        ID Gaji</th>
+                                    <th
+                                        class="px-2 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                        ID Tugas</th>
+                                    <th
+                                        class="px-2 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                        ID Akun</th>
+                                    <th
+                                        class="px-2 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                        Jumlah Gaji</th>
+                                    <th
+                                        class="px-2 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                        Status Pembayaran</th>
+                                    <th
+                                        class="px-2 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                        Tanggal Pembayaran</th>
+                                </thead>
+                                <tbody>
+                                    @foreach ($gaji as $gaji)
+                                        <tr>
+                                            <td
+                                                class="p-2 pl-6 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                                <p class="mb-0 text-xs font-semibold leading-tight ">{{ $gaji->ID_Gaji }}
+                                                </p>
+                                            </td>
+                                            <td
+                                                class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                                <p class="mb-0 text-xs font-semibold leading-tight">{{ $gaji->ID_Tugas }}
+                                                </p>
+                                            </td>
+                                            <td
+                                                class="p-2 pl-3 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                                <p class="mb-0 text-xs font-semibold leading-tight">{{ $gaji->ID_Akun }}</p>
+                                            </td>
+                                            <td
+                                                class="p-2 pl-3 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                                <p class="mb-0 text-xs font-semibold leading-tight">
+                                                    Rp. {{ number_format($gaji->Jumlah_Gaji, 0, ',', '.') }}
+                                                </p>
+                                            </td>
+                                            <td class="p-2   align-middle bg-transparent border-b shadow-transparent ">
+                                                <P class="mb-0 text-xs font-semibold leading-tight">
+                                                    {{ $gaji->Status_Pembayaran }}</P>
+                                            </td>
+                                            <td class="p-2   align-middle bg-transparent border-b shadow-transparent ">
+                                                <P class="mb-0 text-xs font-semibold leading-tight">
+                                                    {{ $gaji->Tanggal_Pembayaran }}</P>
+                                            </td>
+                                            @if ($gaji->Status_Pembayaran == 'Belum Dibayar')
+                                                <td>
+                                                    <form action="gaji/update-pembayaran/{{ $gaji->ID_Gaji }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('put')
+                                                        <button type="submit"
+                                                            class="bg-green-500 hover:bg-blue-400 text-white font-bold text-sm py-1 px-4 border-b-4 border-green-700 hover:border-blue-500 rounded">Bayar</button>
+                                                    </form>
+                                                </td>
+                                            @endif
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{{ URL('js/editGaji.js') }}"></script>
+@endsection

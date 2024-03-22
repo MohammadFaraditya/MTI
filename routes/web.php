@@ -8,6 +8,12 @@ use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\RuteController;
 use App\Http\Controllers\DataPerjalananController;
 use App\Http\Controllers\ChangePasswordController;
+use App\Http\Controllers\AdminSopirController;
+use App\Http\Controllers\AdminKernetController;
+use App\Http\Controllers\AdminAgenController;
+use App\Http\Controllers\AdminKomisiAgenController;
+use App\Http\Controllers\AdminGajiController;
+use App\Http\Controllers\AdminBusController;
 use RealRashid\SweetAlert\Facades\Alert;
 
 /*
@@ -49,6 +55,7 @@ Route::middleware(['auth', 'web'])->group(function () {
     Route::get('/admin-editrute/{ID_Rute}', [RuteController::class, 'EditRute']);
     Route::put('/admin/{ID_Rute}', [RuteController::class, 'update']);
     Route::delete("/admin/delete/{ID_Rute}", [RuteController::class, 'destroy']);
+    Route::get('/admin/search-rute', [RuteController::class, 'Search']);
 
     Route::prefix('/admin')->group(function () {
 
@@ -78,17 +85,59 @@ Route::middleware(['auth', 'web'])->group(function () {
         Route::get('/data-tugas', [AdminController::class, 'DataTugas']);
 
         // Admin Bus
-        Route::get('/bus', [AdminController::class, 'Bus']);
-
-        // Admin Sopir
-        Route::get('/sopir', [AdminController::class, 'Sopir']);
-        Route::prefix('/sopir')->group(function () {
+        Route::get('/bus', [AdminBusController::class, 'index']);
+        Route::prefix('/bus')->group(function () {
+            Route::get('/add-bus', [AdminBusController::class, 'AddBus']);
+            Route::post('/store-bus', [AdminBusController::class, 'StoreBus']);
+            Route::get('/edit-bus/{ID_Bus}', [AdminBusController::class, 'EditBus']);
+            Route::put('/update-bus/{ID_Bus}', [AdminBusController::class, 'UpdateBus']);
+            Route::delete('/delete-bus/{ID_Bus}', [AdminBusController::class, 'DeleteBus']);
         });
 
-        Route::get('/kernet', [AdminController::class, 'Kernet']);
-        Route::get('/agen', [AdminController::class, 'Agen']);
-        Route::get('/gaji', [AdminController::class, 'Gaji']);
-        Route::get('/komisi-agen', [AdminController::class, 'KomisiAgen']);
+        // Admin Sopir
+        Route::get('/sopir', [AdminSopirController::class, 'index']);
+        Route::prefix('/sopir')->group(function () {
+            Route::get('/add-sopir', [AdminSopirController::class, 'AddSopir']);
+            Route::post('/store-sopir', [AdminSopirController::class, 'storeSopir']);
+            Route::get('/edit-sopir/{ID_Akun}', [AdminSopirController::class, 'EditSopir']);
+            Route::put('/update-sopir/{ID_Akun}', [AdminSopirController::class, 'UpdateSopir']);
+            Route::delete('/delete-sopir/{ID_Akun}', [AdminSopirController::class, 'DeleteSopir']);
+        });
+
+        // Admin Kernet
+        Route::get('/kernet', [AdminKernetController::class, 'index']);
+        Route::prefix('/kernet')->group(function () {
+            Route::get('/add-kernet', [AdminKernetController::class, 'AddKernet']);
+            Route::post('/store-kernet', [AdminKernetController::class, 'StoreKernet']);
+            Route::get('/edit-kernet/{ID_Akun}', [AdminKernetController::class, 'EditKernet']);
+            Route::put('/update-kernet/{ID_Akun}', [AdminKernetController::class, 'UpdateKernet']);
+            Route::delete('delete-kernet/{ID_Akun}', [AdminKernetController::class, 'DeleteKernet']);
+        });
+
+        // Admin Agen
+        Route::get('/agen', [AdminAgenController::class, 'index']);
+        Route::prefix('/agen')->group(function () {
+            Route::get('/add-agen', [AdminAgenController::class, 'AddAgen']);
+            Route::post('/store-agen', [AdminAgenController::class, 'StoreAgen']);
+            Route::get('/edit-agen/{ID_Akun}', [AdminAgenController::class, 'EditAgen']);
+            Route::put('/update-agen/{ID_Akun}', [AdminAgenController::class, 'UpdateAgen']);
+            Route::delete('/delete-agen/{ID_Akun}', [AdminAgenController::class, 'DeleteAgen']);
+        });
+
+        // Admin Gaji
+        Route::get('/gaji', [AdminGajiController::class, 'index']);
+        Route::prefix('/gaji')->group(function () {
+            Route::put('/update-pembayaran/{ID_Gaji}', [AdminGajiController::class, 'bayar']);
+            Route::put('/ubah-gaji-sopir/{ID_Gaji}', [AdminGajiController::class, 'UbahGajiSopir']);
+            Route::put('/ubah-gaji-kernet/{ID_Gaji}', [AdminGajiController::class, 'UbahGajiKernet']);
+        });
+
+        // Admin Komisi Agen
+        Route::get('/komisi-agen', [AdminKomisiAgenController::class, 'index']);
+        Route::prefix('komisi-agen')->group(function () {
+            Route::put('/update-pembayaran/{ID_Komisi}', [AdminKomisiAgenController::class, 'bayar']);
+            Route::put('/ubah-komisi-agen/{ID_GajiKomisi}', [AdminKomisiAgenController::class, 'UbahKomisi']);
+        });
     });
 });
 

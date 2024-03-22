@@ -4,87 +4,77 @@
 @include('admin.NavbarAdmin')
 
 @section('card')
-    @include('sweetalert::alert')
     <div class="w-full px-6 py-6 mx-auto">
-        <!-- tabel Rute -->
+        <!-- table Agen -->
+
         <div class="flex flex-wrap -mx-3">
             <div class="flex-none w-full max-w-full px-3">
                 <div
                     class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-soft-xl rounded-2xl bg-clip-border overflow-x-auto">
                     <div
-                        class="p-6 pb-0 mb-0 bg-white border-b-0 border-b-solid rounded-t-2xl border-b-transparent flex place-content-between flex-col gap-2">
-                        <h6>Tabel Rute</h6>
-                        <div class="flex justify-between">
-                            <div class="flex">
-                                <div
-                                    class="relative flex flex-wrap items-stretch w-full transition-all rounded-lg ease-soft">
-                                    <input type="search"
-                                        class="pl-2 text-sm focus:shadow-soft-primary-outline ease-soft w-1/100 leading-5.6 relative -ml-px block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 pr-3 text-gray-700 transition-all placeholder:text-gray-500 focus:border-blue-300 focus:outline-none focus:transition-shadow"
-                                        placeholder="Cari Rute" />
-                                    <button class="pl-3">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                            stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-                            <a href="/admin-addrute" class="bg-slate-500 text-white p-3 rounded-lg text-xs">+ Tambah
-                                Rute</a>
-                        </div>
+                        class="p-6 pb-0 mb-0 bg-white border-b-0 border-b-solid rounded-t-2xl border-b-transparent flex place-content-between">
+                        <h6>Tabel Agen</h6>
+                        <a href="agen/add-agen" class="bg-slate-500 text-white p-3 rounded-lg text-xs">+ Tambah Agen</a>
                     </div>
-                    <div class="flex-auto px-0 pt-0 pb-2 mt-4">
+                    <div class="flex-auto px-0 pt-0 pb-2">
                         <div class="flex p-0">
                             <table class="items-center w-full mb-0 align-top border-gray-200 text-slate-500">
                                 <thead class="align-bottom">
                                     <th
                                         class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                        ID Rute</th>
+                                        ID Agen</th>
                                     <th
                                         class="px-2 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                        Rute</th>
+                                        Nama Agen</th>
                                     <th
-                                        class="px-6 py-3  font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                        Lintasan Keberangkatan</th>
+                                        class="px-2 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                        No Hp</th>
                                     <th
-                                        class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                        Lintasan Tujuan</th>
+                                        class="px-2 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                        Alamat</th>
                                     <th
-                                        class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                        Jam Keberangkatan</th>
+                                        class="px-2 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                        Username</th>
+                                    <th
+                                        class="px-2 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                        Password</th>
                                 </thead>
                                 <tbody>
-                                    @foreach ($DataRute as $Datarute)
+                                    @foreach ($agen as $agen)
                                         <tr>
                                             <td
                                                 class="p-2 pl-6 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                                <p class="mb-0 text-xs font-semibold leading-tight">
-                                                    {{ $Datarute->ID_Rute }}
+                                                <p class="mb-0 text-xs font-semibold leading-tight ">{{ $agen->ID_Akun }}
                                                 </p>
-
                                             </td>
                                             <td
                                                 class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                                <p class="mb-0 text-xs font-semibold leading-tight">
-                                                    {{ $Datarute->Kota_Keberangkatan }}-{{ $Datarute->Kota_Tujuan }}</p>
-                                            </td>
-                                            <td class="p-2 pl-6  align-middle bg-transparent border-b shadow-transparent ">
-                                                <p class="mb-0 text-xs font-semibold leading-tight">
-                                                    {{ $Datarute->Lintasan_Keberangkatan }}</p>
-                                            </td>
-                                            <td class="p-2 pl-6 align-middle bg-transparent border-b  shadow-transparent">
-                                                <p class="mb-0 text-xs font-semibold leading-tight ">
-                                                    {{ $Datarute->Lintasan_Tujuan }}</p>
+                                                <p class="mb-0 text-xs font-semibold leading-tight">{{ $agen->Nama }}
+                                                </p>
                                             </td>
                                             <td
-                                                class="p-2 pl-6  align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                                <p class="mb-0 text-xs font-semibold leading-tight">
-                                                    {{ $Datarute->Jam_Keberangkatan }}</p>
+                                                class="p-2 pl-3 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                                <p class="mb-0 text-xs font-semibold leading-tight">{{ $agen->No_Telepon }}
+                                                </p>
+                                            </td>
+                                            <td class="p-2   align-middle bg-transparent border-b shadow-transparent ">
+                                                <a class="mb-0 text-xs font-semibold leading-tight ">{{ $agen->Alamat }}</a>
+                                            </td>
+                                            <td class="p-2  align-middle bg-transparent border-b shadow-transparent ">
+                                                <a
+                                                    class="mb-0 text-xs font-semibold leading-tight ">{{ $agen->Username }}</a>
+                                            </td>
+                                            <td class="p-2 align-middle bg-transparent border-b shadow-transparent ">
+                                                <a
+                                                    class="mb-0 text-xs font-semibold leading-tight ">{{ substr($agen->Password, 0, 7) }}...</a>
+                                            </td>
+                                            <td class="p-2 align-middle bg-transparent border-b shadow-transparent ">
+                                                <a
+                                                    class="mb-0 text-xs font-semibold leading-tight ">{{ $agen->ID_Komisi }}</a>
                                             </td>
                                             <td
                                                 class="p-2 pl-6 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                                <a href="admin-editrute/{{ $Datarute->ID_Rute }}"><svg
+                                                <a href="agen/edit-agen/{{ $agen->ID_Akun }}"><svg
                                                         xmlns="http://www.w3.org/2000/svg" fill="none"
                                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                                         class="w-6 h-6">
@@ -95,7 +85,7 @@
                                             </td>
                                             <td
                                                 class="p-2 pl-6 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                                <form action="/admin/delete/{{ $Datarute->ID_Rute }}" method="POST">
+                                                <form action="agen/delete-agen/{{ $agen->ID_Akun }}" method="POST">
                                                     @csrf
                                                     @method('delete')
                                                     <button type="submit">

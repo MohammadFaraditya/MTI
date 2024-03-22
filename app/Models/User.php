@@ -19,19 +19,27 @@ class User extends Authenticatable
         'Nama',
         'Alamat',
         'Tanggal_Lahir',
-        'Kota_Kelahiran',
+        'No_SIM',
         'Username',
         'Password',
-        'ID_Gaji',
+        'No_Telepon',
         'ID_Bus',
         'ID_Komisi',
-        'No_Sim',
-        'Status',
-        'create_at',
-        'update_at'
+        'Kota_Kelahiran',
+        'Status'
     ];
 
     protected $hidden = [
         'Password'
     ];
+
+    public function getIDAkunAttribute()
+    {
+        return $this->attributes['ID_Akun'];
+    }
+
+    public function bus()
+    {
+        return $this->belongsTo(Bus::class, 'id_bus', 'ID_Bus');
+    }
 }

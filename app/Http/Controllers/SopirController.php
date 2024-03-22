@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 
 class SopirController extends Controller
 {
-    public function index() {
-        return view("sopir.MainSopir");
+    public function index()
+    {
+        return view("admin.Sopir.Sopir");
     }
 }

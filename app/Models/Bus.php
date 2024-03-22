@@ -17,9 +17,7 @@ class Bus extends Model
         'Jadwal_Service',
         'Status_Bus',
         'Kelas_Bus',
-        'ID_Sopir_1',
-        'ID_Sopir_2',
-        'ID_Kernet'
+
     ];
 
     protected $table = 'bus';
@@ -29,5 +27,10 @@ class Bus extends Model
     public function getIdBusAttribute()
     {
         return $this->attributes['ID_Bus'];
+    }
+
+    public function users()
+    {
+        return $this->hasMany(User::class, 'id_bus', 'ID_Bus');
     }
 }

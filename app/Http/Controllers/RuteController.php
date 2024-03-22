@@ -60,4 +60,11 @@ class RuteController extends Controller
 
         return redirect('/admin');
     }
+
+    public function Search(Request $request)
+    {
+        if($request->has('search')) {
+            $rute = Rute::where
+        }
+    }
 }

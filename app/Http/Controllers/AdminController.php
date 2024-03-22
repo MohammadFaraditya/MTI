@@ -25,29 +25,4 @@ class AdminController extends Controller
     {
         return view("admin.Bus");
     }
-
-    public function Sopir()
-    {
-        return view("admin.Sopir");
-    }
-
-    public function Kernet()
-    {
-        return view("admin.Kernet");
-    }
-
-    public function Agen()
-    {
-        return view("admin.Agen");
-    }
-
-    public function Gaji()
-    {
-        return view("admin.Gaji");
-    }
-
-    public function KomisiAgen()
-    {
-        return view("admin.KomisiAgen");
-    }
 }
