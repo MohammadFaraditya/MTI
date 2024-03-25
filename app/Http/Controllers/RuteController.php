@@ -10,6 +10,7 @@ class RuteController extends Controller
 {
     public function index()
     {
+
         $DataRute = Rute::all();
         return view("admin.Rute.Rute", ['DataRute' => $DataRute]);
     }
@@ -63,8 +64,18 @@ class RuteController extends Controller
 
     public function Search(Request $request)
     {
-        if($request->has('search')) {
-            $rute = Rute::where
+
+        if ($request->has('search')) {
+            $DataRute = Rute::where('ID_Rute', 'LIKE', '%' . $request->search . '%')->get();
+        } else {
+            $DataRute = Rute::all();
         }
+
+        return view("admin.Rute.Rute", ['DataRute' => $DataRute]);
+    }
+
+    public function lintar()
+    {
+        return view('admin.lintar');
     }
 }

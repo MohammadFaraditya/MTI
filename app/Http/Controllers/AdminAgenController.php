@@ -71,4 +71,16 @@ class AdminAgenController extends Controller
         Alert::success("Berhasil Delete Data kernet");
         return redirect('admin/agen');
     }
+
+    public function search(Request $request)
+    {
+        if ($request->has('search')) {
+            $agen = User::where('Nama', 'LIKE', '%' . $request->search . '%')->get();
+        } else {
+            $agen = User::where('Role', 'agen')
+                ->orWhereRaw('LOWER(Role) = ?', ['agen'])
+                ->get();
+        }
+        return view('admin.Agen.Agen', ['agen' => $agen]);
+    }
 }

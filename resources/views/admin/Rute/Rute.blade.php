@@ -13,22 +13,29 @@
                     class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-soft-xl rounded-2xl bg-clip-border overflow-x-auto">
                     <div
                         class="p-6 pb-0 mb-0 bg-white border-b-0 border-b-solid rounded-t-2xl border-b-transparent flex place-content-between flex-col gap-2">
-                        <h6>Tabel Rute</h6>
+
                         <div class="flex justify-between">
-                            <div class="flex">
-                                <div
-                                    class="relative flex flex-wrap items-stretch w-full transition-all rounded-lg ease-soft">
-                                    <input type="search"
-                                        class="pl-2 text-sm focus:shadow-soft-primary-outline ease-soft w-1/100 leading-5.6 relative -ml-px block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 pr-3 text-gray-700 transition-all placeholder:text-gray-500 focus:border-blue-300 focus:outline-none focus:transition-shadow"
-                                        placeholder="Cari Rute" />
-                                    <button class="pl-3">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                            stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                                        </svg>
-                                    </button>
-                                </div>
+                            <div class="flex gap-6">
+                                <a href="/admin">
+                                    <h6 class="text-xl">Tabel Rute</h6>
+                                </a>
+                                <form action="admin/search-rute" method="GET">
+                                    <div
+                                        class="relative flex flex-wrap items-stretch w-full transition-all rounded-lg ease-soft">
+                                        <input type="search"
+                                            class="pl-2 focus:shadow-soft-primary-outline ease-soft w-1/100 leading-5.6 relative -ml-px 
+                                            block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 pr-3 
+                                            text-gray-700 transition-all placeholder:text-gray-500 focus:border-blue-300 focus:outline-none focus:transition-shadow text-sm"
+                                            placeholder="Cari Rute" name="search" />
+                                        <button class="pl-3">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </form>
                             </div>
                             <a href="/admin-addrute" class="bg-slate-500 text-white p-3 rounded-lg text-xs">+ Tambah
                                 Rute</a>

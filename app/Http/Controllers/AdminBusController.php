@@ -87,4 +87,35 @@ class AdminBusController extends Controller
         Alert::success('Berhasil Menghapus Data Bus');
         return redirect('/admin/bus');
     }
+
+    public function Search(Request $request)
+    {
+
+        if ($request->has('search')) {
+            $bus = Bus::where('ID_Bus', 'LIKE', '%' . $request->search . '%')->get();
+        } else {
+            $bus = Bus::all();
+        }
+        $sopir = User::join('bus', 'users.id_bus', '=', 'bus.ID_Bus')
+            ->select('users.*')
+            ->where(function ($query) {
+                $query->where('users.Role', 'Sopir')
+                    ->orWhere('users.Role', 'sopir');
+            })
+            ->get();
+
+        $kernet = User::join('bus', 'users.id_bus', '=', 'bus.ID_Bus')
+            ->select('users.*')
+            ->where(function ($query) {
+                $query->where('users.Role', 'Kernet')
+                    ->orWhere('users.Role', 'kernet');
+            })
+            ->get();
+
+        return view('admin.Bus.Bus', [
+            'bus' => $bus,
+            'sopir' => $sopir,
+            'kernet' => $kernet
+        ]);
+    }
 }

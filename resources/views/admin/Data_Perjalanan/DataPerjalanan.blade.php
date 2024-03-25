@@ -13,7 +13,22 @@
                     class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-soft-xl rounded-2xl bg-clip-border overflow-x-auto">
                     <div
                         class="p-6 pb-0 mb-0 bg-white border-b-0 border-b-solid rounded-t-2xl border-b-transparent flex place-content-between">
-                        <h6>Tabel Data Perjalanan</h6>
+                        <div class="flex gap-5">
+                            <a href="{{ route('index.perjalanan') }}">
+                                <h6>Tabel Data Perjalanan</h6>
+                            </a>
+                            <form action="{{ route('search.perjalanan') }}">
+                                <select class="border-4 text-sm" name="tanggal">
+                                    @foreach ($tanggal as $tanggal)
+                                        <option>{{ $tanggal }}</option>
+                                    @endforeach
+                                </select>
+                                <button
+                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold  py-1 px-3 rounded text-sm">
+                                    Search
+                                </button>
+                            </form>
+                        </div>
                     </div>
                     <div class="flex-auto px-0 pt-0 pb-2">
                         <div class="flex p-0">

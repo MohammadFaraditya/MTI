@@ -6,16 +6,27 @@ use Illuminate\Http\Request;
 use App\Models\Bus;
 use App\Models\Rute;
 use App\Models\Jadwal;
+use App\Models\DataPerjalanan;
 use RealRashid\SweetAlert\Facades\Alert;
 use Carbon\Carbon;
 
 class JadwalController extends Controller
 {
-    public function JadwalPerjalanan()
+    public function JadwalPerjalanan(Request $request)
     {
-        $Datajadwal = Jadwal::all();
 
-        return view("admin.Jadwal.JadwalPerjalanan", ['DataJadwal' => $Datajadwal]);
+        $Datajadwal = Jadwal::all();
+        $tanggal = Jadwal::select('Tanggal')->distinct()->get();
+
+        $options = [];
+        foreach ($tanggal as $tgl) {
+            // Cek apakah nilai Tanggal sudah ada di dalam array $options
+            if (!in_array($tgl->Tanggal, $options)) {
+                // Jika belum ada, tambahkan ke dalam array
+                $options[] = $tgl->Tanggal;
+            }
+        }
+        return view("admin.Jadwal.JadwalPerjalanan", ['DataJadwal' => $Datajadwal, 'tanggal' => $options]);
     }
 
 
@@ -132,5 +143,27 @@ class JadwalController extends Controller
 
         Alert::success("Berhasil Menghapus Jadwal");
         return redirect('admin/jadwal-perjalanan');
+    }
+
+    public function search(Request $request)
+    {
+        $tanggal = Jadwal::select('Tanggal')->distinct()->get();
+
+        $options = [];
+        foreach ($tanggal as $tgl) {
+            // Cek apakah nilai Tanggal sudah ada di dalam array $options
+            if (!in_array($tgl->Tanggal, $options)) {
+                // Jika belum ada, tambahkan ke dalam array
+                $options[] = $tgl->Tanggal;
+            }
+        }
+
+        if ($request->tanggal) {
+            $DataJadwal = Jadwal::where('Tanggal', 'LIKE', '%' . $request->tanggal . '%')->get();
+        } else {
+            $DataJadwal = Jadwal::all();
+        }
+
+        return view("admin.Jadwal.JadwalPerjalanan", ['DataJadwal' => $DataJadwal, 'tanggal' => $options]);
     }
 }

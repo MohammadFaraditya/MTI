@@ -85,4 +85,16 @@ class AdminSopirController extends Controller
         Alert::success("Berhasil Delete Data Sopir");
         return redirect('admin/sopir');
     }
+
+    public function search(Request $request)
+    {
+        if ($request->has('search')) {
+            $sopir = User::where('Nama', 'LIKE', '%' . $request->search . '%')->get();
+        } else {
+            $sopir = User::where('Role', 'sopir')
+                ->orWhereRaw('LOWER(Role) = ?', ['sopir'])
+                ->get();
+        }
+        return view('admin.Sopir.Sopir', ['sopir' => $sopir]);
+    }
 }

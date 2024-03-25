@@ -14,9 +14,25 @@
                     class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-soft-xl rounded-2xl bg-clip-border overflow-x-auto">
                     <div
                         class="p-6 pb-0 mb-0 bg-white border-b-0 border-b-solid rounded-t-2xl border-b-transparent flex place-content-between">
-                        <h6>Tabel Jadwal Perjalanan</h6>
+                        <div class="flex gap-5">
+                            <a href="{{ route('index.jadwal') }}">
+                                <h6>Tabel Jadwal Perjalanan</h6>
+                            </a>
+                            <form action="{{ route('search.jadwal') }}">
+                                <select class="border-4 text-sm" name="tanggal">
+                                    @foreach ($tanggal as $tanggal)
+                                        <option>{{ $tanggal }}</option>
+                                    @endforeach
+                                </select>
+                                <button
+                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold  py-1 px-3 rounded text-sm">
+                                    Search
+                                </button>
+                            </form>
+                        </div>
 
-                        <a href="/admin/jadwal-perjalanan/addjadwal" class="bg-slate-500 text-white p-3 rounded-lg text-xs">+
+                        <a href="/admin/jadwal-perjalanan/addjadwal"
+                            class="bg-slate-500 text-white p-3 rounded-lg text-xs">+
                             Tambah
                             Jadwal</a>
                     </div>
@@ -92,7 +108,8 @@
                                             </td>
                                             <td
                                                 class="p-2 pl-6  align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                                <p class="mb-0 text-xs font-semibold leading-tight">Rp. {{ $jadwal->Harga }}
+                                                <p class="mb-0 text-xs font-semibold leading-tight">Rp.
+                                                    {{ number_format($jadwal->Harga, 0, ',', '.') }}
                                                 </p>
                                             </td>
                                             <td

@@ -83,4 +83,16 @@ class AdminKernetController extends Controller
         Alert::success("Berhasil Delete Data kernet");
         return redirect('admin/kernet');
     }
+
+    public function search(Request $request)
+    {
+        if ($request->has('search')) {
+            $kernet = User::where('Nama', 'LIKE', '%' . $request->search . '%')->get();
+        } else {
+            $kernet = User::where('Role', 'kernet')
+                ->orWhereRaw('LOWER(Role) = ?', ['kernet'])
+                ->get();
+        }
+        return view('admin.Kernet.Kernet', ['kernet' => $kernet]);
+    }
 }
