@@ -14,6 +14,8 @@ use App\Http\Controllers\AdminAgenController;
 use App\Http\Controllers\AdminKomisiAgenController;
 use App\Http\Controllers\AdminGajiController;
 use App\Http\Controllers\AdminBusController;
+use App\Http\Controllers\TugasController;
+use App\Http\Controllers\AgenController;
 use RealRashid\SweetAlert\Facades\Alert;
 
 /*
@@ -33,8 +35,8 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login')->
 Route::post('/login', [LoginController::class, 'login'])->middleware('guest');
 Route::get('/logout', [LoginController::class, 'logout'])->middleware('auth')->name('logout');
 
-Route::get('/ubah-password', [ChangePasswordController::class, 'showChangePasswordForm']);
-Route::post('/ubah-password', [ChangePasswordController::class, 'changePassword']);
+Route::get('/ubah-password', [ChangePasswordController::class, 'showChangePasswordForm'])->name('ShowChangePasswordForm');
+Route::post('/ubah-password', [ChangePasswordController::class, 'changePassword'])->name('ChangePassword');
 
 Route::get('/', function () {
     return redirect('/admin');
@@ -50,13 +52,13 @@ Route::middleware(['auth', 'web'])->group(function () {
 
     // Admin Rute
     Route::get('/admin', [RuteController::class, 'index'])->name("admin");
-    Route::get('/admin-addrute', [RuteController::class, 'addRute']);
-    Route::post('/admin', [RuteController::class, 'StoreRute']);
-    Route::get('/admin-editrute/{ID_Rute}', [RuteController::class, 'EditRute']);
-    Route::put('/admin/{ID_Rute}', [RuteController::class, 'update']);
-    Route::delete("/admin/delete/{ID_Rute}", [RuteController::class, 'destroy']);
-    Route::get('/admin/search-rute', [RuteController::class, 'Search']);
-    Route::get('/lintar', [RuteController::class, 'lintar']);
+    Route::get('/admin-addrute', [RuteController::class, 'addRute'])->name('AddRute');
+    Route::post('/admin', [RuteController::class, 'StoreRute'])->name('StoreRute');
+    Route::get('/admin-editrute/{ID_Rute}', [RuteController::class, 'EditRute'])->name('EditRute');
+    Route::put('/admin/{ID_Rute}', [RuteController::class, 'update'])->name('UpdateRute');
+    Route::delete("/admin/delete/{ID_Rute}", [RuteController::class, 'destroy'])->name('DestroyRute');
+    Route::get('/admin/search-rute', [RuteController::class, 'Search'])->name('SearchRute');
+    Route::get('/admin/lintar', [TugasController::class, 'Data'])->name('GetDataTugas');
 
     Route::prefix('/admin')->group(function () {
 
@@ -96,6 +98,7 @@ Route::middleware(['auth', 'web'])->group(function () {
             Route::put('/update-bus/{ID_Bus}', [AdminBusController::class, 'UpdateBus']);
             Route::delete('/delete-bus/{ID_Bus}', [AdminBusController::class, 'DeleteBus']);
             Route::get('/searc-bus', [AdminBusController::class, 'Search'])->name('search.bus');
+            Route::get('tes/seat', [AdminBusController::class, 'seat'])->name('seat');
         });
 
         // Admin Sopir
@@ -153,11 +156,18 @@ Route::middleware(['auth', 'web'])->group(function () {
 
 
 
+// Front End Agen
+Route::get('/agen', [AgenController::class, 'index']);
+Route::prefix('/agen')->group(function () {
+    Route::get('/cari-jadwal', [AgenController::class, 'cariJadwal'])->name('agenSearchJadwal');
+});
 
-Route::get('/agen', [\App\Http\Controllers\AgenController::class, 'index']);
 
+// Front End Sopir
 Route::get('/sopir', [\App\Http\Controllers\SopirController::class, 'index']);
 
+
+// Front End Kernet
 Route::get('/kernet', [\App\Http\Controllers\KernetController::class, 'index']);
 
 Route::get('/debug', [DebugController::class, 'index']);

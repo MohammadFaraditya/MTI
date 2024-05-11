@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\Jadwal;
 use App\Models\DataPerjalanan;
+use App\Models\Bus;
 use Carbon\Carbon;
 
 class PerjalananInsert extends Command
@@ -36,6 +37,8 @@ class PerjalananInsert extends Command
     public function handle()
     {
         while (true) {
+
+            // Data Perjalanan
             $hariIni = Carbon::now();
             $hariIni->setTimezone('Asia/Jakarta');
 
@@ -64,6 +67,10 @@ class PerjalananInsert extends Command
                     ]);
                 }
             }
+
+            // Tugas
+            $bus = Bus::all();
+
 
             // Jeda selama 60 detik (1 menit)
             sleep(60);

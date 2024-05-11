@@ -12,7 +12,7 @@ use Carbon\Carbon;
 
 class JadwalController extends Controller
 {
-    public function JadwalPerjalanan(Request $request)
+    public function JadwalPerjalanan()
     {
 
         $Datajadwal = Jadwal::all();
@@ -57,13 +57,14 @@ class JadwalController extends Controller
 
         if ($request->Tanggal_Awal == $request->Tanggal_Akhir) {
             $jadwal = Carbon::parse($request->Tanggal_Awal)->format('dmy');
+            $bus = Bus::findOrFail($request->ID_Bus);
             Jadwal::create([
                 'ID_Jadwal' => "JLR" . $jadwal . rand(1, 10) + 1,
                 'ID_Rute' => $request->ID_Rute,
                 'Tanggal' => $request->Tanggal_Awal,
                 'ID_Bus' => $request->ID_Bus,
                 'Seat_Terisi' => 0,
-                'Jumlah_Seat' => $request->Jumlah_Seat,
+                'Jumlah_Seat' => $bus->Jumlah_Seat,
                 'Jam_Keberangkatan' => $request->Jam_Keberangkatan,
                 'Kelas_Bus' => $request->Kelas_Bus,
                 'Harga' => $request->Harga

@@ -45,6 +45,11 @@
                 <input type="text" name="Kelas_Bus" required
                     class="bg-gray-100 border border-gray-200 rounded py-1 px-3 block focus:ring-blue-500 focus:border-blue-500 text-gray-700 w-full" />
             </div>
+            <div>
+                <label for="Jumlah_Seat" class="text-sm text-gray-700 block mb-1 font-medium">Jumlah_Seat</label>
+                <input type="text" name="Jumlah_Seat" required
+                    class="bg-gray-100 border border-gray-200 rounded py-1 px-3 block focus:ring-blue-500 focus:border-blue-500 text-gray-700 w-full" />
+            </div>
     </div>
 
     <div class="space-x-4 p-4">

@@ -16,6 +16,7 @@ class Rute extends Model
         'Lintasan_Keberangkatan',
         'Lintasan_Tujuan',
         'Jam_Keberangkatan',
+        'Jam_Kedatangan',
         'updated_at',
         'created_at'
     ];

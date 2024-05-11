@@ -17,6 +17,7 @@ class Bus extends Model
         'Jadwal_Service',
         'Status_Bus',
         'Kelas_Bus',
+        'Jumlah_Seat'
 
     ];
 

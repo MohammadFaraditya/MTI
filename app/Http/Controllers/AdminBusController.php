@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Bus;
 use App\Models\User;
+use App\Models\Seat;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class AdminBusController extends Controller
@@ -50,10 +51,24 @@ class AdminBusController extends Controller
             'Tahun_Bus' => $request->Tahun_Bus,
             'Jadwal_Service' => $request->Jadwal_Service,
             'Status_Bus' => $request->Status_Bus,
-            'Kelas_Bus' => $request->Kelas_Bus
+            'Kelas_Bus' => $request->Kelas_Bus,
+            'Jumlah_Seat' => $request->Jumlah_Seat,
         ]);
 
+        for ($i = 1; $i <= $request->Jumlah_Seat; $i++) {
+            Seat::create([
+                'ID_Seat' => rand(1, 10000),
+                'No_Seat' => $i,
+                'ID_Bus' => $request->ID_Bus,
+                'Available' => false,
+            ]);
+        }
+
+
+
+
         Alert::success("Berhasil Menambah Data Bus");
+        return redirect('/admin/bus');
     }
 
     public function EditBus($ID_Bus)
@@ -73,6 +88,7 @@ class AdminBusController extends Controller
         $bus->Jadwal_Service = $request->Jadwal_Service;
         $bus->Status_Bus = $request->Status_Bus;
         $bus->Kelas_Bus = $request->Kelas_Bus;
+        $bus->Jumlah_Seat = $request->Jumlah_Seat;
         $bus->save();
 
         Alert::success('Berhasil Update Data Bus');
@@ -117,5 +133,9 @@ class AdminBusController extends Controller
             'sopir' => $sopir,
             'kernet' => $kernet
         ]);
+    }
+
+    public function seat()
+    {
     }
 }

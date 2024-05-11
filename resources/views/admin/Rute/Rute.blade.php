@@ -19,7 +19,7 @@
                                 <a href="/admin">
                                     <h6 class="text-xl">Tabel Rute</h6>
                                 </a>
-                                <form action="admin/search-rute" method="GET">
+                                <form action="{{ route('SearchRute') }}" method="GET">
                                     <div
                                         class="relative flex flex-wrap items-stretch w-full transition-all rounded-lg ease-soft">
                                         <input type="search"
@@ -37,7 +37,7 @@
                                     </div>
                                 </form>
                             </div>
-                            <a href="/admin-addrute" class="bg-slate-500 text-white p-3 rounded-lg text-xs">+ Tambah
+                            <a href="{{ route('AddRute') }}" class="bg-slate-500 text-white p-3 rounded-lg text-xs">+ Tambah
                                 Rute</a>
                         </div>
                     </div>
@@ -60,6 +60,9 @@
                                     <th
                                         class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
                                         Jam Keberangkatan</th>
+                                    <th
+                                        class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                        Jam Kedatangan</th>
                                 </thead>
                                 <tbody>
                                     @foreach ($DataRute as $Datarute)
@@ -77,12 +80,23 @@
                                                     {{ $Datarute->Kota_Keberangkatan }}-{{ $Datarute->Kota_Tujuan }}</p>
                                             </td>
                                             <td class="p-2 pl-6  align-middle bg-transparent border-b shadow-transparent ">
-                                                <p class="mb-0 text-xs font-semibold leading-tight">
-                                                    {{ $Datarute->Lintasan_Keberangkatan }}</p>
+                                                @foreach ($Keberangkatan as $keberangkatan)
+                                                    @if ($Datarute->ID_Rute == $keberangkatan->ID_Rute)
+                                                        <p class="mb-0 text-xs font-semibold leading-tight">
+                                                            {{ $keberangkatan->Lintasan }} :
+                                                            {{ $keberangkatan->Nama_Lintasan }} -
+                                                            {{ $keberangkatan->Jam_Keberangkatan }}</p>
+                                                    @endif
+                                                @endforeach
+
                                             </td>
                                             <td class="p-2 pl-6 align-middle bg-transparent border-b  shadow-transparent">
-                                                <p class="mb-0 text-xs font-semibold leading-tight ">
-                                                    {{ $Datarute->Lintasan_Tujuan }}</p>
+                                                @foreach ($Tujuan as $tujuan)
+                                                    @if ($Datarute->ID_Rute == $tujuan->ID_Rute)
+                                                        <p class="mb-0 text-xs font-semibold leading-tight">
+                                                            {{ $tujuan->Lintasan }} : {{ $tujuan->Nama_Lintasan }}</p>
+                                                    @endif
+                                                @endforeach
                                             </td>
                                             <td
                                                 class="p-2 pl-6  align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
@@ -90,8 +104,13 @@
                                                     {{ $Datarute->Jam_Keberangkatan }}</p>
                                             </td>
                                             <td
+                                                class="p-2 pl-6  align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                                <p class="mb-0 text-xs font-semibold leading-tight">
+                                                    {{ $Datarute->Jam_Kedatangan }}</p>
+                                            </td>
+                                            <td
                                                 class="p-2 pl-6 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                                <a href="admin-editrute/{{ $Datarute->ID_Rute }}"><svg
+                                                <a href="{{ route('EditRute', ['ID_Rute' => $Datarute->ID_Rute]) }}"><svg
                                                         xmlns="http://www.w3.org/2000/svg" fill="none"
                                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                                         class="w-6 h-6">
@@ -102,7 +121,9 @@
                                             </td>
                                             <td
                                                 class="p-2 pl-6 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                                <form action="/admin/delete/{{ $Datarute->ID_Rute }}" method="POST">
+                                                <form
+                                                    action="{{ route('DestroyRute', ['ID_Rute' => $Datarute->ID_Rute]) }}"
+                                                    method="POST">
                                                     @csrf
                                                     @method('delete')
                                                     <button type="submit">
