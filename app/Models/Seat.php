@@ -16,6 +16,7 @@ class Seat extends Model
         'ID_Seat',
         'No_Seat',
         'ID_Bus',
+        'ID_Jadwal',
         'Available'
     ];
 

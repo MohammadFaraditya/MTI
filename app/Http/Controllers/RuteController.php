@@ -18,19 +18,6 @@ class RuteController extends Controller
         $keberangkatan = LintasanKeberangkatan::all();
         $tujuan = LintasanTujuan::all();
 
-        // $hasil = [];
-        // foreach ($DataRute as $datarute) {
-        //     foreach ($keberangkatan as $datakeberangkatan) {
-        //         if ($datarute->ID_Rute == $datakeberangkatan->ID_Rute) {
-        //             $hasil[] = [$datakeberangkatan->Lintasan][$datakeberangkatan->Nama_Lintasan]    ;
-        //         }
-        //     }
-        // }
-
-        // ksort($hasil);
-        // dd($hasil);
-
-
         return view("admin.Rute.Rute", ['DataRute' => $DataRute, 'Keberangkatan' => $keberangkatan, 'Tujuan' => $tujuan]);
     }
 
@@ -136,27 +123,29 @@ class RuteController extends Controller
         // Update Lintasan Keberangkatan Jika tidak ada input data tambahan
         if (!$request->keberangkatan) {
             foreach ($nilaiKeberangkatan as $key => $value) {
-                if ($value === null) {
+                // Cek apakah nilai tidak null atau tidak kosong
+                if ($value !== null) {
+                    $requestkeberangkatan = $request->input('Jam_Keberangkatan' . $key);
+                    $keberangkatan = LintasanKeberangkatan::findOrFail($key);
+                    $keberangkatan->Nama_Lintasan = $value;
+                    $keberangkatan->Jam_Keberangkatan = $requestkeberangkatan;
+                    $keberangkatan->save();
+                } else {
+                    // Jika nilai null atau kosong, hapus data
                     $keberangkatan = LintasanKeberangkatan::findOrFail($key);
                     $keberangkatan->delete();
-                } else {
-                    // Hanya perbarui data jika elemen dengan ID unik tersebut masih ada di formulir
-                    if ($request->has("keberangkatan[$key]")) {
-                        $keberangkatan = LintasanKeberangkatan::findOrFail($key);
-                        $keberangkatan->Nama_Lintasan = $value;
-                        $keberangkatan->Jam_Keberangkatan = $request->Jam_Keberangkatan;
-                        $keberangkatan->save();
-                    }
                 }
             }
         } else {
             //Update Data Lintasan Keberangkatan Tambahan
             foreach ($request->keberangkatan as $key => $value) {
+                $requestkeberangkatan = $request->input('jamkeberangkatan' . $key);
                 LintasanKeberangkatan::create([
                     'ID_Lintasan' => rand(1, 1000),
                     'ID_Rute' => $request->ID_Rute,
-                    'Lintasan' => 'lintasan-' . $key + 1,
-                    'Nama_Lintasan' => $value
+                    'Lintasan' => 'lintasan-' . $key,
+                    'Nama_Lintasan' => $value,
+                    'Jam_Keberangkatan' => $requestkeberangkatan
                 ]);
             }
         }
@@ -177,23 +166,28 @@ class RuteController extends Controller
         }
         if (!$request->tujuan) {
             foreach ($nilaiTujuan as $key => $value) {
-                if ($key && $value === null) {
-                    $tujuan = LintasanTujuan::findOrFail($key);
-                    $tujuan->delete();
-                } else {
+                if ($value !== null) {
+                    $requestkedatangan = $request->input('Jam_Kedatangan' . $key);
                     $tujuan = LintasanTujuan::findOrFail($key);
                     $tujuan->Nama_Lintasan = $value;
+                    $tujuan->Jam_Kedatangan = $requestkedatangan;
                     $tujuan->save();
+                } else {
+                    // Jika nilai null atau kosong, hapus data
+                    $tujuan = LintasanTujuan::findOrFail($key);
+                    $tujuan->delete();
                 }
             }
         } else {
             //Update Data Lintasan Keberangkatan Tambahan
             foreach ($request->tujuan as $key => $value) {
+                $requesttujuan = $request->input('jamkedatangan' . $key);
                 LintasanTujuan::create([
                     'ID_Lintasan' => rand(1, 1000),
                     'ID_Rute' => $request->ID_Rute,
-                    'Lintasan' => 'lintasan-' . $key + 1,
-                    'Nama_Lintasan' => $value
+                    'Lintasan' => 'lintasan-' . $key,
+                    'Nama_Lintasan' => $value,
+                    'Jam_Kedatangan' => $requesttujuan
                 ]);
             }
         }

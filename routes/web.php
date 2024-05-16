@@ -149,6 +149,12 @@ Route::middleware(['auth', 'web'])->group(function () {
             Route::put('/ubah-komisi-agen/{ID_GajiKomisi}', [AdminKomisiAgenController::class, 'UbahKomisi']);
         });
     });
+
+    Route::get('/agen', [AgenController::class, 'index']);
+    Route::prefix('/agen')->group(function () {
+        Route::match(['get', 'post'], '/cari-jadwal', [AgenController::class, 'cariJadwal'])->name('cariJadwal');
+        Route::get('/booking-ticket/{ID_Jadwal}', [AgenController::class, 'viewBooking'])->name('ViewBooking');
+    });
 });
 
 
@@ -157,10 +163,7 @@ Route::middleware(['auth', 'web'])->group(function () {
 
 
 // Front End Agen
-Route::get('/agen', [AgenController::class, 'index']);
-Route::prefix('/agen')->group(function () {
-    Route::get('/cari-jadwal', [AgenController::class, 'cariJadwal'])->name('agenSearchJadwal');
-});
+
 
 
 // Front End Sopir

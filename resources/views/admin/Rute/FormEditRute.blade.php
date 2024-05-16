@@ -33,7 +33,7 @@
                     </div>
                     <div id="lintasankeberangkatan-form">
                         <!-- Input Pertama -->
-                        @foreach ($LintasanKeberangkatan as $keberangkatan)
+                        @foreach ($LintasanKeberangkatan->sortBy('Jam_Keberangkatan') as $keberangkatan)
                             @if ($ID == $keberangkatan->ID_Rute)
                                 @if ($keberangkatan->ID_Lintasan)
                                     <div id="jumlahIDKeberangkatan{{ $keberangkatan->ID_Lintasan }}">
@@ -43,7 +43,7 @@
                                                 id="keberangkatan{{ $keberangkatan->ID_Lintasan }}"
                                                 value="{{ $keberangkatan->Nama_Lintasan }}"
                                                 class="form-control bg-gray-100 border border-gray-200 rounded">
-                                            <input type="text" name="Jam_Keberangkatan"
+                                            <input type="time" name="Jam_Keberangkatan{{ $keberangkatan->ID_Lintasan }}"
                                                 class="form-control bg-gray-100 border border-gray-200 rounded"
                                                 value="{{ $keberangkatan->Jam_Keberangkatan }}"
                                                 id="jamkeberangkatan{{ $keberangkatan->ID_Lintasan }}">
@@ -83,21 +83,22 @@
                     </div>
                     <div id="lintasantujuan-form">
                         <!-- Input Pertama -->
-                        @foreach ($LintasanTujuan as $tujuan)
+                        @foreach ($LintasanTujuan->sortBy('Jam_Kedatangan') as $tujuan)
                             @if ($ID == $tujuan->ID_Rute)
                                 @if ($tujuan->ID_Lintasan)
                                     <div id="jumlahIDTujuan{{ $tujuan->ID_Lintasan }}">
                                         <div class="mb-3">
                                             <label for="tujuan">{{ $tujuan->Lintasan }}</label>
                                             <input type="text" name="tujuan{{ $tujuan->ID_Lintasan }}"
-                                                value="{{ $tujuan->Nama_Lintasan }}"
+                                                value="{{ $tujuan->Nama_Lintasan }}" id="tujuan{{ $tujuan->ID_Lintasan }}"
                                                 class="form-control bg-gray-100 border border-gray-200 rounded">
-                                            <input type="text" name="Jam_Kedatangan"
+                                            <input type="time" name="Jam_Kedatangan{{ $tujuan->ID_Lintasan }}"
                                                 class="form-control bg-gray-100 border border-gray-200 rounded"
-                                                value="{{ $tujuan->Jam_Kedatangan }}" id="jamkedatangan">
+                                                value="{{ $tujuan->Jam_Kedatangan }}"
+                                                id="jamkedatangan{{ $tujuan->ID_Lintasan }}">
                                             <button type="button"
                                                 class="bg-red-500 hover:bg-red-600 text-white text-sm font-bold py-1 px-2 border-b-4 border-red-500 hover:border-red-500 rounded"
-                                                onclick="removeLintasanTujuan(this)">Hapus</button>
+                                                onclick="removeLintasanTujuan('{{ $tujuan->ID_Lintasan }}')">Hapus</button>
                                         </div>
                                     </div>
                                 @else

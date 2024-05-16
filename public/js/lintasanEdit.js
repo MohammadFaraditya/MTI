@@ -8,14 +8,19 @@ function addLintasanKeberangkatan() {
     const input = document.createElement('div');
     lintasanKeberangkatanCounter++;
     input.innerHTML = `
-        <div class="mb-3 flex">
-        <label for="Lintasan Tambahan" class="text-sm text-gray-700 block mb-1 font-medium">Lintasan Tambahan</label>
-            <input type="text" name="keberangkatan[${lintasanKeberangkatanCounter - 1}]"
+        <div class="mb-3 flex" id="tambahan${lintasanKeberangkatanCounter}">
+        <label for="Lintasan Tambahan">Lintasan Tambahan ${lintasanKeberangkatanCounter}</label>
+            <input type="text" name="keberangkatan[${lintasanKeberangkatanCounter}]"
                 class="form-control bg-gray-100 border border-gray-200 rounded ml-4"
+                id="keberangkatan${lintasanKeberangkatanCounter}"
                 placeholder="Masukkan Lintasan Tambahan">
+            <input type="time" name="jamkeberangkatan${lintasanKeberangkatanCounter}"
+                class="form-control bg-gray-100 border border-gray-200 rounded ml-4"
+                id="jamkeberangkatan${lintasanKeberangkatanCounter}"
+                placeholder="Masukkan Jam Keberangkatan Tambahan">
             <button type="button"
-                class="bg-red-500 hover:bg-red-600 text-white text-sm font-bold py-1 px-2 border-b-4 border-red-500 hover:border-red-500 rounded"
-                onclick="removeLintasanKeberangkatan(this)">Hapus</button>
+                class="bg-red-500 hover:bg-red-600 text-white text-sm font-bold py-1 px-2 border-b-4 border-red-500 hover:border-red-500 rounded ml-2"
+                onclick="removeLintasanTambahan(${lintasanKeberangkatanCounter})">Hapus</button>
         </div>
     `;
     lintasanForm.appendChild(input);
@@ -28,10 +33,16 @@ function removeLintasanKeberangkatan(uniqueId) {
 
     // Hapus tampilan div
     const parentDiv = document.getElementById('jumlahIDKeberangkatan' + uniqueId);
+    console.log(parentDiv);
     if (parentDiv) {
-        parentDiv.parentNode.removeChild(parentDiv);
+        parentDiv.style.display = 'none';
         updateLintasanKeberangkatanCounter();
     }
+}
+
+function removeLintasanTambahan(uniqueId) {
+    let divtambahan = document.getElementById('tambahan' + uniqueId);
+    divtambahan.remove();
 }
 
 
@@ -51,20 +62,26 @@ function updateLintasanKeberangkatanCounter() {
 
 
 //Function Lintasan Tujuan
-let lintasanTujuanCounter = document.getElementsByName('lintasantujuan[]').length;
-
+let jumlahIDTujuanDiv = document.querySelectorAll('[id^="jumlahIDTujuan"]');
+let lintasanTujuanCounter = jumlahIDTujuanDiv.length + 1;
 
 function addLintasanTujuan() {
     const lintasanForm = document.getElementById('lintasantujuan-form');
     const input = document.createElement('div');
     input.innerHTML = `
-        <div class="mb-3">
-            <input type="text" name="lintasantujuan[${lintasanTujuanCounter}]"
-                class="form-control bg-gray-100 border border-gray-200 rounded"
-                placeholder="Masukkan Lintasan ${lintasanTujuanCounter + 1}">
+        <div class="mb-3 flex" id="tambahantujuan${lintasanTujuanCounter}">
+        <label for="Lintasan Tambahan" >Lintasan Tambahan ${lintasanTujuanCounter}</label>
+            <input type="text" name="tujuan[${lintasanTujuanCounter}]"
+                class="form-control bg-gray-100 border border-gray-200 rounded ml-4"
+                id="tujuan${lintasanTujuanCounter}"
+                placeholder="Masukkan Lintasan Tambahan">
+            <input type="time" name="jamkedatangan${lintasanTujuanCounter}"
+                class="form-control bg-gray-100 border border-gray-200 rounded ml-4"
+                id="jamkedatangan${lintasanTujuanCounter}"
+                placeholder="Masukkan Jam Kedatangan Tambahan">
             <button type="button"
-                class="bg-red-500 hover:bg-red-600 text-white text-sm font-bold py-1 px-2 border-b-4 border-red-500 hover:border-red-500 rounded"
-                onclick="removeLintasanTujuan(this)">Hapus</button>
+                class="bg-red-500 hover:bg-red-600 text-white text-sm font-bold py-1 px-2 border-b-4 border-red-500 hover:border-red-500 rounded ml-1"
+                onclick="removeLintasanTujuanTambahan(${lintasanTujuanCounter})">Hapus</button>
         </div>
     `;
     lintasanForm.appendChild(input);
@@ -74,11 +91,23 @@ function addLintasanTujuan() {
     updateLintasanTujuanCounter();
 }
 
-function removeLintasanTujuan(element) {
-    const parentDiv = element.parentElement;
-    parentDiv.remove();
+function removeLintasanTujuan(uniqueId) {
+    // Hapus nilai input
+    document.getElementById('tujuan' + uniqueId).value = null;
+    document.getElementById('jamkedatangan' + uniqueId).value = null;
 
-    updateLintasanTujuanCounter();
+    // Hapus tampilan div
+    const parentDiv = document.getElementById('jumlahIDTujuan' + uniqueId);
+    console.log(parentDiv);
+    if (parentDiv) {
+        parentDiv.style.display = 'none';
+        updateLintasanTujuanCounter();
+    }
+}
+
+function removeLintasanTujuanTambahan(uniqueId) {
+    let divtambahan = document.getElementById('tambahantujuan' + uniqueId);
+    divtambahan.remove();
 }
 
 function updateLintasanTujuanCounter() {

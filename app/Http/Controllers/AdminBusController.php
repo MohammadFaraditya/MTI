@@ -55,14 +55,7 @@ class AdminBusController extends Controller
             'Jumlah_Seat' => $request->Jumlah_Seat,
         ]);
 
-        for ($i = 1; $i <= $request->Jumlah_Seat; $i++) {
-            Seat::create([
-                'ID_Seat' => rand(1, 10000),
-                'No_Seat' => $i,
-                'ID_Bus' => $request->ID_Bus,
-                'Available' => false,
-            ]);
-        }
+
 
 
 

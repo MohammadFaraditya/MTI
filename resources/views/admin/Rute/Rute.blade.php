@@ -80,7 +80,7 @@
                                                     {{ $Datarute->Kota_Keberangkatan }}-{{ $Datarute->Kota_Tujuan }}</p>
                                             </td>
                                             <td class="p-2 pl-6  align-middle bg-transparent border-b shadow-transparent ">
-                                                @foreach ($Keberangkatan as $keberangkatan)
+                                                @foreach ($Keberangkatan->sortBy('Jam_Keberangkatan') as $keberangkatan)
                                                     @if ($Datarute->ID_Rute == $keberangkatan->ID_Rute)
                                                         <p class="mb-0 text-xs font-semibold leading-tight">
                                                             {{ $keberangkatan->Lintasan }} :
@@ -91,10 +91,11 @@
 
                                             </td>
                                             <td class="p-2 pl-6 align-middle bg-transparent border-b  shadow-transparent">
-                                                @foreach ($Tujuan as $tujuan)
+                                                @foreach ($Tujuan->sortBy('Jam_Kedatangan') as $tujuan)
                                                     @if ($Datarute->ID_Rute == $tujuan->ID_Rute)
                                                         <p class="mb-0 text-xs font-semibold leading-tight">
-                                                            {{ $tujuan->Lintasan }} : {{ $tujuan->Nama_Lintasan }}</p>
+                                                            {{ $tujuan->Lintasan }} : {{ $tujuan->Nama_Lintasan }} -
+                                                            {{ $tujuan->Jam_Kedatangan }}</p>
                                                     @endif
                                                 @endforeach
                                             </td>

@@ -7,6 +7,7 @@ use App\Models\Bus;
 use App\Models\Rute;
 use App\Models\Jadwal;
 use App\Models\DataPerjalanan;
+use App\Models\Seat;
 use RealRashid\SweetAlert\Facades\Alert;
 use Carbon\Carbon;
 
@@ -57,18 +58,29 @@ class JadwalController extends Controller
 
         if ($request->Tanggal_Awal == $request->Tanggal_Akhir) {
             $jadwal = Carbon::parse($request->Tanggal_Awal)->format('dmy');
+            $id_jadwal = "JLR" . $jadwal . rand(1, 10) + 1;
             $bus = Bus::findOrFail($request->ID_Bus);
             Jadwal::create([
-                'ID_Jadwal' => "JLR" . $jadwal . rand(1, 10) + 1,
+                'ID_Jadwal' => $id_jadwal,
                 'ID_Rute' => $request->ID_Rute,
                 'Tanggal' => $request->Tanggal_Awal,
-                'ID_Bus' => $request->ID_Bus,
+                'ID_Bus' => $bus->ID_Bus,
                 'Seat_Terisi' => 0,
                 'Jumlah_Seat' => $bus->Jumlah_Seat,
                 'Jam_Keberangkatan' => $request->Jam_Keberangkatan,
                 'Kelas_Bus' => $request->Kelas_Bus,
                 'Harga' => $request->Harga
             ]);
+
+            for ($i = 1; $i <= $bus->Jumlah_Seat; $i++) {
+                Seat::create([
+                    'ID_Seat' => rand(1, 10000),
+                    'No_Seat' => $i,
+                    'ID_Bus' => $request->ID_Bus,
+                    'ID_Jadwal' => $id_jadwal,
+                    'Available' => false,
+                ]);
+            }
         } else {
             $range = generateDateRange($request->Tanggal_Awal, $request->Tanggal_Akhir);
             $dataJadwal = [];  // Inisialisasi array untuk menyimpan data
@@ -81,9 +93,9 @@ class JadwalController extends Controller
                 $carbonDate = Carbon::createFromFormat('Ymd', $range[$i]);
                 $formattedDate = $carbonDate->format('Y-m-d');
                 $tanggal = $formattedDate;
-                $bus = $request->ID_Bus;
+                $bus = Bus::findOrFail($request->ID_Bus);
                 $seat_terisi = 0;
-                $seat = $request->Jumlah_Seat;
+                $seat = $bus->Jumlah_Seat;
                 $kelas = $request->Kelas_Bus;
                 $jam_keberangkatan = $request->Jam_Keberangkatan;
                 $harga = $request->Harga;
@@ -92,7 +104,7 @@ class JadwalController extends Controller
                     'ID_Jadwal' => $jadwal,
                     'ID_Rute' => $rute,
                     'Tanggal' => $tanggal,
-                    'ID_Bus' => $bus,
+                    'ID_Bus' => $bus->ID_Bus,
                     'Seat_Terisi' => $seat_terisi,
                     'Jumlah_Seat' => $seat,
                     'Kelas_Bus' => $kelas,
@@ -103,6 +115,16 @@ class JadwalController extends Controller
 
             foreach ($dataJadwal as $data) {
                 Jadwal::create($data);
+
+                for ($i = 1; $i <= $bus->Jumlah_Seat; $i++) {
+                    Seat::create([
+                        'ID_Seat' => rand(1, 10000) . rand(1, 10000),
+                        'No_Seat' => $i,
+                        'ID_Bus' => $request->ID_Bus,
+                        'ID_Jadwal' => $data['ID_Jadwal'],
+                        'Available' => false,
+                    ]);
+                }
             }
         }
 
