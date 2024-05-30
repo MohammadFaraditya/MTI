@@ -27,11 +27,7 @@ class LoginController extends Controller
 
             if (Auth::check()) {
                 $role = strtolower($user->Role); // Merubah role menjadi huruf kecil
-                $user = User::all();
                 switch ($role) {
-                    case 'admin':
-                        return redirect('/admin');
-                        break;
                     case 'agen':
                         return redirect('/agen');
                         break;
@@ -40,6 +36,9 @@ class LoginController extends Controller
                         break;
                     case 'kernet':
                         return redirect('/kernet');
+                        break;
+                    case 'admin':
+                        return redirect('/admin');
                         break;
                     default:
                         return redirect('/'); // Atau lokasi default jika role tidak dikenali

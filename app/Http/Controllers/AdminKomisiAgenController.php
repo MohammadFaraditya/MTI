@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\GajiKomisi;
 use App\Models\KomisiAgen;
+use App\Models\PesananTicket;
+use App\Models\User;
 use Carbon\Carbon;
 
 class AdminKomisiAgenController extends Controller
@@ -13,7 +15,9 @@ class AdminKomisiAgenController extends Controller
     {
         $komisi = GajiKomisi::all();
         $komisiAgen = KomisiAgen::all();
-        return view('admin.Komisi_Agen.KomisiAgen', ['komisi' => $komisi, 'komisiAgen' => $komisiAgen]);
+        $pesanan = PesananTicket::all();
+        $user = User::all();
+        return view('admin.Komisi_Agen.KomisiAgen', ['komisi' => $komisi, 'komisiAgen' => $komisiAgen, 'pesananTiket' => $pesanan, 'user' => $user]);
     }
 
     public function bayar($ID_Komisi)

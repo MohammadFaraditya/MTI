@@ -16,6 +16,8 @@ use App\Http\Controllers\AdminGajiController;
 use App\Http\Controllers\AdminBusController;
 use App\Http\Controllers\TugasController;
 use App\Http\Controllers\AgenController;
+use App\Http\Controllers\SopirController;
+use App\Http\Controllers\KernetController;
 use RealRashid\SweetAlert\Facades\Alert;
 
 /*
@@ -87,7 +89,7 @@ Route::middleware(['auth', 'web'])->group(function () {
         Route::get('/laporan-operasional', [AdminController::class, 'LaporanOperasional']);
 
         // Admin Tugas
-        Route::get('/data-tugas', [AdminController::class, 'DataTugas']);
+        Route::get('/data-tugas', [TugasController::class, 'DataTugas'])->name('DataTugas');
 
         // Admin Bus
         Route::get('/bus', [AdminBusController::class, 'index'])->name('index.adminBus');
@@ -150,10 +152,55 @@ Route::middleware(['auth', 'web'])->group(function () {
         });
     });
 
-    Route::get('/agen', [AgenController::class, 'index']);
+    // Front End Agen
+
+    // Main Agen/Homepage
+    Route::get('/agen', [AgenController::class, 'index'])->name('indexAgen');
     Route::prefix('/agen')->group(function () {
+        //Cari Jadwal
         Route::match(['get', 'post'], '/cari-jadwal', [AgenController::class, 'cariJadwal'])->name('cariJadwal');
-        Route::get('/booking-ticket/{ID_Jadwal}', [AgenController::class, 'viewBooking'])->name('ViewBooking');
+        Route::get('/booking-ticket/{ID_Jadwal}/{Tujuan}', [AgenController::class, 'viewBooking'])->name('ViewBooking');
+        Route::get('/data-penumpang/{ID_Jadwal}/{Seat}/{Tujuan}', [AgenController::class, 'dataPenumpang'])->name('dataPenumpang');
+        Route::post('/Order-Ticket/{ID_Jadwal}/{Tujuan}', [AgenController::class, 'OrderTicket'])->name('OrderTicket');
+
+        // Pesanan Tiket
+        Route::get('/pesanan-tiket', [AgenController::class, 'PesananTiket'])->name('PesananTiket');
+        Route::put('/lunas-DP/{ID_Pesanan}', [AgenController::class, 'LunasDP'])->name('LunasDP');
+        Route::delete('/cancel-pesanan/{ID_Pesanan}', [AgenController::class, 'CancelPesanan'])->name('CancelPesanan');
+        Route::get('/search-pesanan', [AgenController::class, 'searchPesanan'])->name('searchPesanan');
+
+        // Status Bus
+        Route::get('/status-bus', [AgenController::class, 'StatusBus'])->name('StatusBus');
+
+        // Pendapatan
+        Route::get('/pendapatan-agen', [AgenController::class, 'PendapatanAgen'])->name('PendapatanAgen');
+
+        Route::get('search-pendapatan', [AgenController::class, 'SearchPendapatan'])->name('SearchPendapatan');
+    });
+});
+
+Route::middleware(['auth', 'web'])->group(
+    function () {
+        Route::get('/sopir', [SopirController::class, 'TugasSopir'])->name('TugasSopir');
+        Route::prefix('/sopir')->group(
+            function () {
+                Route::get('/tambah-tugas', [SopirController::class, 'ShowTambahTugas'])->name('ShowTambahTugas');
+                Route::put('/tambah-tugas/{ID_Tugas}', [SopirController::class, 'TambahTugas'])->name('TambahTugas');
+                Route::get('/pendapatan-sopir', [SopirController::class, 'ShowPendapatan'])->name('ShowPendapatan');
+            }
+        );
+    }
+);
+
+Route::middleware(['auth', 'web'])->group(function () {
+    Route::get('/kernet', [KernetController::class, 'TugasKernet'])->name('TugasKernet');
+    Route::prefix('/kernet')->group(function () {
+        Route::get('/tambah-tugas', [KernetController::class, 'ShowTambahTugas'])->name('ShowTambahTugasKernet');
+        Route::put('/tambah-tugas/{ID_Tugas}', [KernetController::class, 'TambahTugas'])->name('TambahTugasKernet');
+        Route::get('/pendapatan-kernet', [KernetController::class, 'ShowPendapatan'])->name('ShowPendapatanKernet');
+        Route::get('/data-seat/{ID_Jadwal}', [KernetController::class, 'DataSeat'])->name('DataSeat');
+        Route::get('/laporan/{ID_Jadwal}/{ID_Tugas}', [KernetController::class, 'ShowReportKernet'])->name('ShowReport');
+        Route::put('/laporan/{ID_Jadwal}/{ID_Tugas}', [KernetController::class, 'StoreLaporan'])->name('storeLaporanBiaya');
     });
 });
 
@@ -161,16 +208,5 @@ Route::middleware(['auth', 'web'])->group(function () {
 
 
 
-
-// Front End Agen
-
-
-
-// Front End Sopir
-Route::get('/sopir', [\App\Http\Controllers\SopirController::class, 'index']);
-
-
-// Front End Kernet
-Route::get('/kernet', [\App\Http\Controllers\KernetController::class, 'index']);
 
 Route::get('/debug', [DebugController::class, 'index']);

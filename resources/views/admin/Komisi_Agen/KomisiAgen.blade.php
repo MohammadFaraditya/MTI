@@ -73,8 +73,14 @@
                                         class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
                                         ID Akun</th>
                                     <th
+                                        class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                        Nama Agen</th>
+                                    <th
                                         class="px-2 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
                                         ID_Pesanan</th>
+                                    <th
+                                        class="px-2 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                        Tanggal Pesanan</th>
                                     <th
                                         class="px-2 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
                                         Jumlah Tiket</th>
@@ -104,8 +110,27 @@
                                             </td>
                                             <td
                                                 class="p-2 pl-6 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                                @foreach ($user as $datauser)
+                                                    @if ($datauser->ID_Akun == $komisiAgen->ID_Akun)
+                                                        <p class="mb-0 text-xs font-semibold leading-tight ">
+                                                            {{ $datauser->Nama }}
+                                                        </p>
+                                                    @endif
+                                                @endforeach
+                                            </td>
+                                            <td
+                                                class="p-2 pl-6 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
                                                 <p class="mb-0 text-xs font-semibold leading-tight ">
                                                     {{ $komisiAgen->ID_Pesanan }}</p>
+                                            </td>
+                                            <td
+                                                class="p-2 pl-6 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                                @foreach ($pesananTiket as $pesanan)
+                                                    @if ($pesanan->ID_Pesanan == $komisiAgen->ID_Pesanan)
+                                                        <p class="mb-0 text-xs font-semibold leading-tight ">
+                                                            {{ $pesanan->Tanggal_Pesanan }}</p>
+                                                    @endif
+                                                @endforeach
                                             </td>
                                             <td
                                                 class="p-2 pl-3 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">

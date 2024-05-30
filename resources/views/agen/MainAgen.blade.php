@@ -40,6 +40,7 @@
     </main>
 </body>
 <script src="{{ URL('js/toggle.js') }}"></script>
+<script src="{{ URL('js/sideAgen.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.0/anime.min.js"></script>
 
 </html>

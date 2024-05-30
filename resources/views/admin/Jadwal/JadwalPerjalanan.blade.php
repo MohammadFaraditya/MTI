@@ -64,6 +64,9 @@
                                     <th
                                         class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
                                         Harga</th>
+                                    <th
+                                        class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                        Status Bus</th>
                                 </thead>
                                 <tbody>
                                     @foreach ($DataJadwal as $jadwal)
@@ -110,6 +113,12 @@
                                                 class="p-2 pl-6  align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
                                                 <p class="mb-0 text-xs font-semibold leading-tight">Rp.
                                                     {{ number_format($jadwal->Harga, 0, ',', '.') }}
+                                                </p>
+                                            </td>
+                                            <td
+                                                class="p-2 pl-6  align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                                <p class="mb-0 text-xs font-semibold leading-tight">
+                                                    {{ $jadwal->Status_Bus }}
                                                 </p>
                                             </td>
                                             <td

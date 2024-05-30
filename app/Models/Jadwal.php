@@ -19,6 +19,7 @@ class Jadwal extends Model
         'Kelas_Bus',
         'Jam_Keberangkatan',
         'Harga',
+        'Status_Bus',
         'updated_at',
         'created_at'
     ];

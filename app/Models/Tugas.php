@@ -15,12 +15,12 @@ class Tugas extends Model
     protected $fillable = [
         'ID_Tugas',
         'ID_Jadwal',
-        'ID_Bus',
-        'ID_Data_Seat',
         'ID_Perjalanan',
+        'Sopir_1',
+        'Sopir_2',
+        'Kernet',
         'Tanggal_dan_Waktu_Tugas_Dimulai',
-        'Tanggal_dan_Waktu_Tugas_Berakhir',
-        'ID_Laporan_Biaya_Perjalanan'
+        'Tanggal_dan_Waktu_Tugas_Berakhir'
     ];
 
 

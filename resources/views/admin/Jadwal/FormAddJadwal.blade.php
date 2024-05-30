@@ -62,6 +62,11 @@
                     <input type="text" name="Harga"
                         class="bg-gray-100 border border-gray-200 rounded py-1 px-3 block focus:ring-blue-500 focus:border-blue-500 text-gray-700 w-full" />
                 </div>
+                <div>
+                    <label for="Status_Bus" class="text-sm text-gray-700 block mb-1 font-medium">Status Bus</label>
+                    <input type="text" name="Status_Bus"
+                        class="bg-gray-100 border border-gray-200 rounded py-1 px-3 block focus:ring-blue-500 focus:border-blue-500 text-gray-700 w-full" />
+                </div>
             </div>
 
             <div class="space-x-4 mt-8">

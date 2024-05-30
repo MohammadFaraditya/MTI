@@ -58,7 +58,7 @@ class JadwalController extends Controller
 
         if ($request->Tanggal_Awal == $request->Tanggal_Akhir) {
             $jadwal = Carbon::parse($request->Tanggal_Awal)->format('dmy');
-            $id_jadwal = "JLR" . $jadwal . rand(1, 10) + 1;
+            $id_jadwal = "JLR" . $jadwal . rand(1, 10000) + 1;
             $bus = Bus::findOrFail($request->ID_Bus);
             Jadwal::create([
                 'ID_Jadwal' => $id_jadwal,
@@ -69,12 +69,13 @@ class JadwalController extends Controller
                 'Jumlah_Seat' => $bus->Jumlah_Seat,
                 'Jam_Keberangkatan' => $request->Jam_Keberangkatan,
                 'Kelas_Bus' => $request->Kelas_Bus,
-                'Harga' => $request->Harga
+                'Harga' => $request->Harga,
+                'Status_Bus' => $request->Status_Bus
             ]);
 
             for ($i = 1; $i <= $bus->Jumlah_Seat; $i++) {
                 Seat::create([
-                    'ID_Seat' => rand(1, 10000),
+                    'ID_Seat' => 'ST' . rand(1, 10000) . rand(1, 10000),
                     'No_Seat' => $i,
                     'ID_Bus' => $request->ID_Bus,
                     'ID_Jadwal' => $id_jadwal,
@@ -88,7 +89,7 @@ class JadwalController extends Controller
 
             for ($i = 0; $i < count($range); $i++) {
                 $rawJadwal = Carbon::parse($range[$i])->format('dmy');
-                $jadwal = "JLR" . $rawJadwal . rand(1, 10);
+                $jadwal = "JLR" . $rawJadwal . rand(1, 10000);
                 $rute = $request->ID_Rute;
                 $carbonDate = Carbon::createFromFormat('Ymd', $range[$i]);
                 $formattedDate = $carbonDate->format('Y-m-d');
@@ -110,6 +111,7 @@ class JadwalController extends Controller
                     'Kelas_Bus' => $kelas,
                     'Jam_Keberangkatan' => $jam_keberangkatan,
                     'Harga' => $harga,
+                    'Status_Bus' => $request->Status_Bus
                 ];
             }
 
@@ -118,7 +120,7 @@ class JadwalController extends Controller
 
                 for ($i = 1; $i <= $bus->Jumlah_Seat; $i++) {
                     Seat::create([
-                        'ID_Seat' => rand(1, 10000) . rand(1, 10000),
+                        'ID_Seat' => 'ST' . rand(1, 10000) . rand(1, 10000),
                         'No_Seat' => $i,
                         'ID_Bus' => $request->ID_Bus,
                         'ID_Jadwal' => $data['ID_Jadwal'],
@@ -153,6 +155,7 @@ class JadwalController extends Controller
         $jadwal->Kelas_Bus = $request->Kelas_Bus;
         $jadwal->Jam_Keberangkatan = $request->Jam_Keberangkatan;
         $jadwal->Harga = $request->Harga;
+        $jadwal->Status_Bus = $request->Status_Bus;
         $jadwal->save();
 
         Alert::success("Berhasil Menyimpan Jadwal");

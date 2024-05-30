@@ -6,6 +6,8 @@ use Illuminate\Console\Command;
 use App\Models\Jadwal;
 use App\Models\DataPerjalanan;
 use App\Models\Bus;
+use App\Models\Tugas;
+use App\Models\User;
 use Carbon\Carbon;
 
 class PerjalananInsert extends Command
@@ -53,11 +55,13 @@ class PerjalananInsert extends Command
                 $Jam_Keberangkatan = Carbon::parse($jadwal->Jam_Keberangkatan)->subMinutes(15);
                 $Jam_Close = Carbon::parse($Jam_Keberangkatan)->format('H:i');
                 $Tanggal_Keberangkatan = $jadwal->Tanggal;
+                $id_perjalanan = "DA" . $id . rand(1, 10000);
 
-                if ($Tanggal_Keberangkatan == $today && $Jam_Close == $jam) {
-
+                if (
+                    $Tanggal_Keberangkatan == $today && $Jam_Close == $jam
+                ) {
                     DataPerjalanan::create([
-                        'ID_Perjalanan' => "DA" . $id . rand(1, 100),
+                        'ID_Perjalanan' => $id_perjalanan,
                         'Tanggal' => $jadwal->Tanggal,
                         'ID_Jadwal' => $jadwal->ID_Jadwal,
                         'Jumlah_Tiket_Yang_Terjual' => $jadwal->Seat_Terisi,
@@ -65,6 +69,69 @@ class PerjalananInsert extends Command
                         'ID_Bus' => $jadwal->ID_Bus,
                         'ID_Rute' => $jadwal->ID_Rute
                     ]);
+
+                    $users = User::join('jadwal', 'users.ID_Bus', '=', 'jadwal.ID_Bus')
+                        ->where('jadwal.ID_Jadwal', $jadwal->ID_Jadwal)
+                        ->select('users.*')
+                        ->get();
+
+                    // Ambil data sopir dan kernet
+                    $sopirs = $users->filter(function ($user) {
+                        return strtolower($user->Role) == 'sopir';
+                    });
+                    $kernet = $users->first(function ($user) {
+                        return strtolower($user->Role) == 'kernet';
+                    });
+
+                    // Ambil sopir pertama dan kedua dari koleksi sopirs
+                    $sopir1 = $sopirs->first();
+                    $sopir2 = $sopirs->count() > 1 ? $sopirs->skip(1)->first() : null;
+
+                    if (!$sopir1 || $sopir1->Status != 'Aktif') {
+                        Tugas::create([
+                            'ID_Tugas' => 'TGS' . $id . rand(1, 10000),
+                            'ID_Jadwal' => $jadwal->ID_Jadwal,
+                            'ID_Perjalanan' => $id_perjalanan,
+                            'Sopir_1' => null,
+                            'Sopir_2' => $sopir2 && $sopir2->Status == 'Aktif' ? $sopir2->ID_Akun . '-' . $sopir2->Nama : null,
+                            'Kernet' => $kernet && $kernet->Status == 'Aktif' ? $kernet->ID_Akun . '-' . $kernet->Nama : null,
+                            'Tanggal_dan_Waktu_Tugas_Dimulai' => $jadwal->Tanggal . ' ' . $jadwal->Jam_Keberangkatan,
+                            'Tanggal_dan_Waktu_Tugas_Berakhir' => null
+                        ]);
+                    } elseif (!$sopir2 || $sopir2->Status != 'Aktif') {
+                        Tugas::create([
+                            'ID_Tugas' => 'TGS' . $id . rand(1, 10000),
+                            'ID_Jadwal' => $jadwal->ID_Jadwal,
+                            'ID_Perjalanan' => $id_perjalanan,
+                            'Sopir_1' => $sopir1 && $sopir1->Status == 'Aktif' ? $sopir1->ID_Akun . '-' . $sopir1->Nama : null,
+                            'Sopir_2' => null,
+                            'Kernet' => $kernet && $kernet->Status == 'Aktif' ? $kernet->ID_Akun . '-' . $kernet->Nama : null,
+                            'Tanggal_dan_Waktu_Tugas_Dimulai' => $jadwal->Tanggal . ' ' . $jadwal->Jam_Keberangkatan,
+                            'Tanggal_dan_Waktu_Tugas_Berakhir' => null
+                        ]);
+                    } elseif (!$kernet || $kernet->Status != 'Aktif') {
+                        Tugas::create([
+                            'ID_Tugas' => 'TGS' . $id . rand(1, 10000),
+                            'ID_Jadwal' => $jadwal->ID_Jadwal,
+                            'ID_Perjalanan' => $id_perjalanan,
+                            'Sopir_1' => $sopir1 && $sopir1->Status == 'Aktif' ? $sopir1->ID_Akun . '-' . $sopir1->Nama : null,
+                            'Sopir_2' => $sopir2 && $sopir2->Status == 'Aktif' ? $sopir2->ID_Akun . '-' . $sopir2->Nama : null,
+                            'Kernet' => null,
+                            'Tanggal_dan_Waktu_Tugas_Dimulai' => $jadwal->Tanggal . ' ' . $jadwal->Jam_Keberangkatan,
+                            'Tanggal_dan_Waktu_Tugas_Berakhir' => null
+                        ]);
+                    } else {
+                        Tugas::create([
+                            'ID_Tugas' => 'TGS' . $id . rand(1, 10000),
+                            'ID_Jadwal' => $jadwal->ID_Jadwal,
+                            'ID_Perjalanan' => $id_perjalanan,
+                            'Sopir_1' => $sopir1->ID_Akun . '-' . $sopir1->Nama,
+                            'Sopir_2' => $sopir2->ID_Akun . '-' . $sopir2->Nama,
+                            'Kernet' => $kernet->ID_Akun . '-' . $kernet->Nama,
+                            'Tanggal_dan_Waktu_Tugas_Dimulai' => $jadwal->Tanggal . ' ' . $jadwal->Jam_Keberangkatan,
+                            'Tanggal_dan_Waktu_Tugas_Berakhir' => null
+                        ]);
+                    }
                 }
             }
 

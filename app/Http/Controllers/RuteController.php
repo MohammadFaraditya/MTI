@@ -51,7 +51,7 @@ class RuteController extends Controller
             }
 
             LintasanKeberangkatan::create([
-                'ID_Lintasan' => rand(1, 1000),
+                'ID_Lintasan' => 'LK' . rand(1, 10000),
                 'ID_Rute' => $request->ID_Rute,
                 'Lintasan' => $lintasanText,
                 'Nama_Lintasan' => $lintasan,
@@ -74,7 +74,7 @@ class RuteController extends Controller
             }
 
             LintasanTujuan::create([
-                'ID_Lintasan' => rand(1, 1000),
+                'ID_Lintasan' => 'LT' . rand(1, 10000),
                 'ID_Rute' => $request->ID_Rute,
                 'Lintasan' => $lintasanText,
                 'Nama_Lintasan' => $lintasantujuan[$i],
@@ -141,7 +141,7 @@ class RuteController extends Controller
             foreach ($request->keberangkatan as $key => $value) {
                 $requestkeberangkatan = $request->input('jamkeberangkatan' . $key);
                 LintasanKeberangkatan::create([
-                    'ID_Lintasan' => rand(1, 1000),
+                    'ID_Lintasan' => 'LK' . rand(1, 10000),
                     'ID_Rute' => $request->ID_Rute,
                     'Lintasan' => 'lintasan-' . $key,
                     'Nama_Lintasan' => $value,
@@ -183,7 +183,7 @@ class RuteController extends Controller
             foreach ($request->tujuan as $key => $value) {
                 $requesttujuan = $request->input('jamkedatangan' . $key);
                 LintasanTujuan::create([
-                    'ID_Lintasan' => rand(1, 1000),
+                    'ID_Lintasan' => 'LT' . rand(1, 10000),
                     'ID_Rute' => $request->ID_Rute,
                     'Lintasan' => 'lintasan-' . $key,
                     'Nama_Lintasan' => $value,

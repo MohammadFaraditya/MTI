@@ -9,6 +9,7 @@
             <form action="{{ route('cariJadwal') }}" method="POST">
                 @csrf
                 <div class="flex bg-white py-4 rounded-xl shadow-soft-xl">
+                    <input type="hidden" id="selectedDestination" name="selectedDestination">
                     <div class="w-10 h-6 py-[11px]">
                         <svg class="svg-icon" viewBox="0 0 20 20">
                             <path
@@ -17,10 +18,18 @@
                         </svg>
                     </div>
                     <div>
+                        @php
+                            $uniqueLintasan = [];
+                        @endphp
                         <h6 class="text-black">Tujuan</h6>
-                        <select name="Tujuan">
-                            @foreach ($rute as $dataRute)
-                                <option value="{{ $dataRute->Kota_Tujuan }}">{{ $dataRute->Kota_Tujuan }}</option>
+                        <select name="Tujuan" id="Tujuan">
+                            @foreach ($LintasanTujuan as $tujuan)
+                                @if (!in_array($tujuan->Nama_Lintasan, $uniqueLintasan))
+                                    <option value="{{ $tujuan->Nama_Lintasan }}">{{ $tujuan->Nama_Lintasan }}</option>
+                                    @php
+                                        $uniqueLintasan[] = $tujuan->Nama_Lintasan;
+                                    @endphp
+                                @endif
                             @endforeach
                         </select>
                     </div>
@@ -30,11 +39,12 @@
                     <input type="date" name="tanggal">
                 </div>
 
-                <button type="submit" class="py-4 px-32 bg-black text-white rounded-xl text-md mt-3">Search</button>
+                <button type="submit" onclick="saveDestination()"
+                    class="py-4 px-32 bg-black text-white rounded-xl text-md mt-3">Search</button>
             </form>
         </div>
 
-        @if ($DataJadwal != null)
+        @isset($DataJadwal)
             <div class="w-full p-3 rounded-lg relative">
                 @foreach ($DataJadwal as $dataJadwal)
                     <div class="bg-white p-3 text-xs w-full rounded-lg shadow-soft-xl mt-5">
@@ -51,11 +61,14 @@
                             <p>Seat Tersedia : {{ $dataJadwal->Jumlah_Seat - $dataJadwal->Seat_Terisi }} kursi</p>
                             <p class="text-lg">Harga : {{ $dataJadwal->Harga }}</p>
                         </div>
-                        <a href="{{ route('ViewBooking', ['ID_Jadwal' => $dataJadwal->ID_Jadwal]) }}"><button
-                                class="bg-black py-3 px-4 text-white rounded-xl text-md w-full">Pesan</button></a>
+                        <a href="{{ route('ViewBooking', ['ID_Jadwal' => $dataJadwal->ID_Jadwal, 'Tujuan' => $Tujuan]) }}"
+                            id="pesanButton">
+                            <button class="bg-black py-3 px-4 text-white rounded-xl text-md w-full">Pesan</button>
+                        </a>
                     </div>
                 @endforeach
             </div>
-        @endif
+        @endisset
     </div>
 @endsection
+<script></script>
