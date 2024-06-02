@@ -87,7 +87,9 @@ class AdminKernetController extends Controller
     public function search(Request $request)
     {
         if ($request->has('search')) {
-            $kernet = User::where('Nama', 'LIKE', '%' . $request->search . '%')->get();
+            $kernet = User::where('Nama', 'LIKE', '%' . $request->search . '%')
+                ->where('Role', 'LIKE', '%' . 'kernet' . '%')
+                ->orWhere('ID_Akun', 'LIKE', '%' . $request->search . '%')->get();
         } else {
             $kernet = User::where('Role', 'kernet')
                 ->orWhereRaw('LOWER(Role) = ?', ['kernet'])

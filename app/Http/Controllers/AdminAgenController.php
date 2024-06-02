@@ -75,7 +75,9 @@ class AdminAgenController extends Controller
     public function search(Request $request)
     {
         if ($request->has('search')) {
-            $agen = User::where('Nama', 'LIKE', '%' . $request->search . '%')->get();
+            $agen = User::where('Nama', 'LIKE', '%' . $request->search . '%')
+                ->where('Role', 'LIKE', '%' . 'agen' . '%')
+                ->orWhere('ID_Akun', 'LIKE', '%' . $request->search . '%')->get();
         } else {
             $agen = User::where('Role', 'agen')
                 ->orWhereRaw('LOWER(Role) = ?', ['agen'])

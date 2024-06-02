@@ -18,6 +18,7 @@ use App\Http\Controllers\TugasController;
 use App\Http\Controllers\AgenController;
 use App\Http\Controllers\SopirController;
 use App\Http\Controllers\KernetController;
+use App\Http\Controllers\LaporanOperasionalController;
 use RealRashid\SweetAlert\Facades\Alert;
 
 /*
@@ -86,7 +87,9 @@ Route::middleware(['auth', 'web'])->group(function () {
         });
 
         // Admin Laporan
-        Route::get('/laporan-operasional', [AdminController::class, 'LaporanOperasional']);
+        Route::get('/laporan-operasional', [LaporanOperasionalController::class, 'ShowLaporan'])->name('LaporanOperasional');
+        Route::get('/laporan-operasional/rincian/{ID_Laporan}', [LaporanOperasionalController::class, 'ShowLaporanRincian'])->name('RincianLaporan');
+        Route::get('/search-laporan', [LaporanOperasionalController::class, 'SearchLaporan'])->name('SearchLaporan');
 
         // Admin Tugas
         Route::get('/data-tugas', [TugasController::class, 'DataTugas'])->name('DataTugas');
@@ -142,6 +145,7 @@ Route::middleware(['auth', 'web'])->group(function () {
             Route::put('/update-pembayaran/{ID_Gaji}', [AdminGajiController::class, 'bayar']);
             Route::put('/ubah-gaji-sopir/{ID_Gaji}', [AdminGajiController::class, 'UbahGajiSopir']);
             Route::put('/ubah-gaji-kernet/{ID_Gaji}', [AdminGajiController::class, 'UbahGajiKernet']);
+            Route::get('/search-gaji', [AdminGajiController::class, 'SearchGaji'])->name('SearchGaji');
         });
 
         // Admin Komisi Agen
@@ -149,6 +153,7 @@ Route::middleware(['auth', 'web'])->group(function () {
         Route::prefix('komisi-agen')->group(function () {
             Route::put('/update-pembayaran/{ID_Komisi}', [AdminKomisiAgenController::class, 'bayar']);
             Route::put('/ubah-komisi-agen/{ID_GajiKomisi}', [AdminKomisiAgenController::class, 'UbahKomisi']);
+            Route::get('/search-komisi', [AdminKomisiAgenController::class, 'SearchKomisi'])->name('SearchKomisi');
         });
     });
 
@@ -186,7 +191,8 @@ Route::middleware(['auth', 'web'])->group(
             function () {
                 Route::get('/tambah-tugas', [SopirController::class, 'ShowTambahTugas'])->name('ShowTambahTugas');
                 Route::put('/tambah-tugas/{ID_Tugas}', [SopirController::class, 'TambahTugas'])->name('TambahTugas');
-                Route::get('/pendapatan-sopir', [SopirController::class, 'ShowPendapatan'])->name('ShowPendapatan');
+                Route::get('/pendapatan-sopir', [SopirController::class, 'ShowPendapatan'])->name('ShowPendapatanSopir');
+                Route::get('/search-pendapatan', [SopirController::class, 'SearchPendapatan'])->name('SearchPendapatanSopir');
             }
         );
     }
@@ -201,6 +207,8 @@ Route::middleware(['auth', 'web'])->group(function () {
         Route::get('/data-seat/{ID_Jadwal}', [KernetController::class, 'DataSeat'])->name('DataSeat');
         Route::get('/laporan/{ID_Jadwal}/{ID_Tugas}', [KernetController::class, 'ShowReportKernet'])->name('ShowReport');
         Route::put('/laporan/{ID_Jadwal}/{ID_Tugas}', [KernetController::class, 'StoreLaporan'])->name('storeLaporanBiaya');
+        Route::get('/pendapatan-kernet', [KernetController::class, 'ShowPendapatan'])->name('ShowPendapatanKernet');
+        Route::get('/search-pendapatan', [KernetController::class, 'SearchPendapatan'])->name('SearchPendapatanKernet');
     });
 });
 

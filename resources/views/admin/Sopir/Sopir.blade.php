@@ -22,7 +22,7 @@
                                     class="relative flex flex-wrap items-stretch w-full transition-all rounded-lg ease-soft">
                                     <input type="search"
                                         class="pl-2 text-sm focus:shadow-soft-primary-outline ease-soft w-1/100 leading-5.6 relative -ml-px block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 pr-3 text-gray-700 transition-all placeholder:text-gray-500 focus:border-blue-300 focus:outline-none focus:transition-shadow"
-                                        placeholder="Cari Bus" name="search" />
+                                        placeholder="Cari Sopir" name="search" />
                                     <button class="pl-3">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                             stroke-width="1.5" stroke="currentColor" class="w-6 h-6">

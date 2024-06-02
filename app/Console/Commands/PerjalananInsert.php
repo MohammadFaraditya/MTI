@@ -87,7 +87,7 @@ class PerjalananInsert extends Command
                     $sopir1 = $sopirs->first();
                     $sopir2 = $sopirs->count() > 1 ? $sopirs->skip(1)->first() : null;
 
-                    if (!$sopir1 || $sopir1->Status != 'Aktif') {
+                    if (!$sopir1 || strtolower($sopir1->Status) != 'aktif') {
                         Tugas::create([
                             'ID_Tugas' => 'TGS' . $id . rand(1, 10000),
                             'ID_Jadwal' => $jadwal->ID_Jadwal,
@@ -98,7 +98,7 @@ class PerjalananInsert extends Command
                             'Tanggal_dan_Waktu_Tugas_Dimulai' => $jadwal->Tanggal . ' ' . $jadwal->Jam_Keberangkatan,
                             'Tanggal_dan_Waktu_Tugas_Berakhir' => null
                         ]);
-                    } elseif (!$sopir2 || $sopir2->Status != 'Aktif') {
+                    } elseif (!$sopir2 || strtolower($sopir2->Status) != 'aktif') {
                         Tugas::create([
                             'ID_Tugas' => 'TGS' . $id . rand(1, 10000),
                             'ID_Jadwal' => $jadwal->ID_Jadwal,
@@ -109,7 +109,7 @@ class PerjalananInsert extends Command
                             'Tanggal_dan_Waktu_Tugas_Dimulai' => $jadwal->Tanggal . ' ' . $jadwal->Jam_Keberangkatan,
                             'Tanggal_dan_Waktu_Tugas_Berakhir' => null
                         ]);
-                    } elseif (!$kernet || $kernet->Status != 'Aktif') {
+                    } elseif (!$kernet || strtolower($kernet->Status) != 'aktif') {
                         Tugas::create([
                             'ID_Tugas' => 'TGS' . $id . rand(1, 10000),
                             'ID_Jadwal' => $jadwal->ID_Jadwal,

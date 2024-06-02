@@ -9,7 +9,7 @@
             <div class="flex-auto px-0 pt-0 pb-2 mt-4 ">
                 <div class="mb-4">
                     <h6 class="">Cari Pendapatan </h6>
-                    <form action="{{ route('SearchPendapatanSopir') }}">
+                    <form action="{{ route('SearchPendapatanKernet') }}">
                         <select class="border-4 text-sm" name="tanggal">
                             @foreach ($Tanggal as $tanggaltugas)
                                 <option>{{ $tanggaltugas->Tanggal_dan_Waktu_Tugas_Dimulai }}</option>

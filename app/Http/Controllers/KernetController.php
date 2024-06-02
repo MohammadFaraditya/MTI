@@ -95,7 +95,7 @@ class KernetController extends Controller
             $dataseat = Seat::where('ID_Jadwal', $ID_Jadwal)->get();
             $tiket = Ticket::where('ID_Jadwal', $ID_Jadwal)->get();
 
-            return view('kernet.DataSeat', ['ID_Jadwal' => $ID_Jadwal]);
+            return view('kernet.DataSeat', ['ID_Jadwal' => $ID_Jadwal, 'DataSeat' => $dataseat, 'tiket' => $tiket]);
         }
     }
 
@@ -207,5 +207,38 @@ class KernetController extends Controller
         }
 
         return redirect()->route('TugasKernet')->with('error', 'Gagal menyimpan laporan');
+    }
+
+    public function ShowPendapatan()
+    {
+        if (Auth::check()) {
+            $user = Auth::user();
+
+            $gaji = Gaji::where('ID_Akun', $user->ID_Akun)->get();
+            $tugas = Tugas::all();
+            $tanggalTugas = Tugas::where('Kernet', 'LIKE', $user->ID_Akun . '-%')->get();
+
+
+            return view('kernet.PendapatanKernet', ['GajiKernet' => $gaji, 'DataTugas' => $tugas, 'Tanggal' => $tanggalTugas]);
+        }
+    }
+
+    public function SearchPendapatan(Request $request)
+    {
+        if (Auth::check()) {
+            $user = Auth::user();
+
+            $gaji = Gaji::join('tugas', 'gaji.ID_Tugas', '=', 'tugas.ID_Tugas')
+                ->whereDate('tugas.Tanggal_dan_Waktu_Tugas_Dimulai', '=', $request->tanggal)
+                ->where('tugas.Kernet', 'LIKE', $user->ID_Akun . '-%')
+                ->where('gaji.ID_Akun', $user->ID_Akun)
+                ->select('gaji.*')
+                ->get();
+
+            $tugas = Tugas::all();
+            $tanggalTugas = Tugas::where('Kernet', 'LIKE', $user->ID_Akun . '-%')->get();
+
+            return view('kernet.PendapatanKernet', ['GajiKernet' => $gaji, 'DataTugas' => $tugas, 'Tanggal' => $tanggalTugas]);
+        }
     }
 }

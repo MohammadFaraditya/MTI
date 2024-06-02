@@ -82,6 +82,7 @@
                         @endforeach
                     </div>
                 </div>
+
                 <div
                     class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-soft-xl rounded-2xl bg-clip-border overflow-x-auto">
                     <div class="flex justify-between">
@@ -110,7 +111,20 @@
                                 </div>
                             @endforeach
                         </div>
-
+                        <div class="p-4">
+                            <h6 class="">Cari Gaji Per Tanggal</h6>
+                            <form action="{{ route('SearchGaji') }}">
+                                <select class="border-4 text-sm" name="tanggal">
+                                    @foreach ($tanggal as $datatanggal)
+                                        <option>{{ $datatanggal }}</option>
+                                    @endforeach
+                                </select>
+                                <button
+                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold  py-1 px-3 rounded text-sm">
+                                    Search
+                                </button>
+                            </form>
+                        </div>
                     </div>
 
                     <div class="flex-auto px-0 pt-0 pb-2">
@@ -124,6 +138,9 @@
                                     <th
                                         class="px-2 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
                                         ID Tugas</th>
+                                    <th
+                                        class="px-2 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                        Tanggal Tugas</th>
                                     <th
                                         class="px-2 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
                                         ID Akun</th>
@@ -148,6 +165,16 @@
                                             <td
                                                 class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
                                                 <p class="mb-0 text-xs font-semibold leading-tight">{{ $gaji->ID_Tugas }}
+                                                </p>
+                                            </td>
+                                            <td
+                                                class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                                <p class="mb-0 text-xs font-semibold leading-tight">
+                                                    @foreach ($DataTugas as $tugas)
+                                                        @if ($gaji->ID_Tugas == $tugas->ID_Tugas)
+                                                            {{ $tugas->Tanggal_dan_Waktu_Tugas_Dimulai }}
+                                                        @endif
+                                                    @endforeach
                                                 </p>
                                             </td>
                                             <td

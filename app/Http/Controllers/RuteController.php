@@ -219,11 +219,16 @@ class RuteController extends Controller
 
         if ($request->has('search')) {
             $DataRute = Rute::where('ID_Rute', 'LIKE', '%' . $request->search . '%')->get();
+            $keberangkatan = LintasanKeberangkatan::all();
+            $tujuan = LintasanTujuan::all();
+
+            return view("admin.Rute.Rute", ['DataRute' => $DataRute, 'Keberangkatan' => $keberangkatan, 'Tujuan' => $tujuan]);
         } else {
             $DataRute = Rute::all();
+            $keberangkatan = LintasanKeberangkatan::all();
+            $tujuan = LintasanTujuan::all();
+            return view("admin.Rute.Rute", ['DataRute' => $DataRute, 'Keberangkatan' => $keberangkatan, 'Tujuan' => $tujuan]);
         }
-
-        return view("admin.Rute.Rute", ['DataRute' => $DataRute]);
     }
 
     public function lintar()

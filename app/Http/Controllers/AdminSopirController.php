@@ -89,7 +89,9 @@ class AdminSopirController extends Controller
     public function search(Request $request)
     {
         if ($request->has('search')) {
-            $sopir = User::where('Nama', 'LIKE', '%' . $request->search . '%')->get();
+            $sopir = User::where('Nama', 'LIKE', '%' . $request->search . '%')
+                ->where('Role', 'LIKE', '%' . 'sopir' . '%')
+                ->orWhere('ID_Akun', 'LIKE', '%' . $request->search . '%')->get();
         } else {
             $sopir = User::where('Role', 'sopir')
                 ->orWhereRaw('LOWER(Role) = ?', ['sopir'])

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\GajiKomisi;
 use App\Models\Gaji;
+use App\Models\Tugas;
 use Carbon\Carbon;
 
 class AdminGajiController extends Controller
@@ -13,7 +14,19 @@ class AdminGajiController extends Controller
     {
         $komisiGaji = GajiKomisi::all();
         $gaji = Gaji::all();
-        return view('admin.Gaji.Gaji', ['komisiGaji' => $komisiGaji, 'gaji' => $gaji]);
+        $tugas = Tugas::all();
+
+        $tanggal = Tugas::select('Tanggal_dan_Waktu_Tugas_Dimulai')->distinct()->get();
+        $options = [];
+        foreach ($tanggal as $tgl) {
+            // Cek apakah nilai Tanggal sudah ada di dalam array $options
+            if (!in_array($tgl->Tanggal_dan_Waktu_Tugas_Dimulai, $options)) {
+                // Jika belum ada, tambahkan ke dalam array
+                $options[] = $tgl->Tanggal_dan_Waktu_Tugas_Dimulai;
+            }
+        }
+
+        return view('admin.Gaji.Gaji', ['komisiGaji' => $komisiGaji, 'tanggal' => $options, 'gaji' => $gaji, 'DataTugas' => $tugas]);
     }
 
     public function bayar($ID_Gaji)
@@ -44,5 +57,30 @@ class AdminGajiController extends Controller
         $gajiKernet->save();
 
         return redirect('admin/gaji');
+    }
+
+    public function SearchGaji(Request $request)
+    {
+        $komisiGaji = GajiKomisi::all();
+        $tugas = Tugas::all();
+
+        $tanggal = Tugas::select('Tanggal_dan_Waktu_Tugas_Dimulai')->distinct()->get();
+        $options = [];
+        foreach ($tanggal as $tgl) {
+            // Cek apakah nilai Tanggal sudah ada di dalam array $options
+            if (!in_array($tgl->Tanggal_dan_Waktu_Tugas_Dimulai, $options)) {
+                // Jika belum ada, tambahkan ke dalam array
+                $options[] = $tgl->Tanggal_dan_Waktu_Tugas_Dimulai;
+            }
+        }
+
+        if ($request->tanggal) {
+            $gaji = Tugas::join('Gaji', 'tugas.ID_Tugas', '=', 'gaji.ID_Tugas')
+                ->where('Tanggal_dan_Waktu_Tugas_Dimulai', 'LIKE', '%' . $request->tanggal . '%')->get();
+        } else {
+            $gaji = Gaji::all();
+        }
+
+        return view('admin.Gaji.Gaji', ['komisiGaji' => $komisiGaji, 'tanggal' => $options, 'gaji' => $gaji, 'DataTugas' => $tugas]);
     }
 }

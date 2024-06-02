@@ -26,6 +26,6 @@ class LaporanOperasional extends Model
 
     public function getIDLaporanOperasionalAttribute()
     {
-        return $this->attribute['ID_Laporan_Operasional'];
+        return $this->attributes['ID_Laporan_Operasional'];
     }
 }

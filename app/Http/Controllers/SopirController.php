@@ -87,14 +87,40 @@ class SopirController extends Controller
         }
     }
 
-
     public function ShowPendapatan()
     {
         if (Auth::check()) {
             $user = Auth::user();
 
             $gaji = Gaji::where('ID_Akun', $user->ID_Akun)->get();
-            return view('sopir.PendapatanSopir', ['gaji' => $gaji]);
+            $tugas = Tugas::all();
+            $tanggalTugas = Tugas::where('Sopir_1', 'LIKE', $user->ID_Akun . '-%')
+                ->orWhere('Sopir_2', 'LIKE', $user->ID_Akun . '-%')
+                ->get();
+
+
+            return view('kernet.PendapatanKernet', ['GajiKernet' => $gaji, 'DataTugas' => $tugas, 'Tanggal' => $tanggalTugas]);
+        }
+    }
+
+    public function SearchPendapatan(Request $request)
+    {
+        if (Auth::check()) {
+            $user = Auth::user();
+
+            $gaji = Gaji::join('tugas', 'gaji.ID_Tugas', '=', 'tugas.ID_Tugas')
+                ->whereDate('tugas.Tanggal_dan_Waktu_Tugas_Dimulai', '=', $request->tanggal)
+                ->where('tugas.Kernet', 'LIKE', $user->ID_Akun . '-%')
+                ->where('gaji.ID_Akun', $user->ID_Akun)
+                ->select('gaji.*')
+                ->get();
+
+            $tugas = Tugas::all();
+            $tanggalTugas = Tugas::where('Sopir_1', 'LIKE', $user->ID_Akun . '-%')
+                ->orWhere('Sopir_2', 'LIKE', $user->ID_Akun . '-%')
+                ->get();
+
+            return view('kernet.PendapatanKernet', ['GajiKernet' => $gaji, 'DataTugas' => $tugas, 'Tanggal' => $tanggalTugas]);
         }
     }
 }
